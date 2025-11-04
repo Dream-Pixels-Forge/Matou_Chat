@@ -1190,3 +1190,10 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-11-04 16:06:15.681 | INFO     | main:log_requests:79 - Request completed in 30.85ms | Status: 500
 2025-11-04 16:08:14.518 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
 2025-11-04 16:08:14.522 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 14
+2025-11-04 16:09:18.680 | INFO     | main:chat:213 - Chat response - Status: 200
+2025-11-04 16:09:18.683 | INFO     | main:log_requests:86 - Request completed in 64165.61ms | Status: 200
+2025-11-04 16:09:19.502 | INFO     | main:log_requests:69 - Request: OPTIONS http://localhost:8001/api/tts
+2025-11-04 16:09:19.505 | INFO     | main:log_requests:79 - Request completed in 3.60ms | Status: 200
+2025-11-04 16:09:19.765 | INFO     | main:log_requests:69 - Request: POST http://localhost:8001/api/tts
+2025-11-04 16:09:19.788 | ERROR    | main:http_exception_handler:86 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-11-04 16:09:19.806 | INFO     | main:log_requests:79 - Request completed in 40.94ms | Status: 500
