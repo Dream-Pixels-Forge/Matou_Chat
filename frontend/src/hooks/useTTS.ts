@@ -39,7 +39,7 @@ export const useTTS = (options: TTSServiceOptions = {}) => {
     const audioData = audioQueueRef.current.shift();
 
     if (!audioData) {
-      isPlayingRef.current = false;
+      setIsSpeaking(false);
       return;
     }
 

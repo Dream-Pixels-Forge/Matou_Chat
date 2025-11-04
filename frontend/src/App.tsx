@@ -72,6 +72,17 @@ function App() {
   const computedColorScheme = useComputedColorScheme('light');
   const [mobileOpened, setMobileOpened] = useState(false);
   
+  // Don't render until settings are loaded
+  if (!settings) {
+    return (
+      <MantineProvider theme={theme} defaultColorScheme={computedColorScheme}>
+        <Container size="md" h="100vh" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Text>Loading...</Text>
+        </Container>
+      </MantineProvider>
+    );
+  }
+  
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useLocalStorage<Message[]>({
@@ -87,11 +98,11 @@ function App() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize TTS
+  // Initialize TTS with safe defaults
   const { speak, isSpeaking } = useTTS({
-    voice: settings.tts.voice,
-    rate: settings.tts.rate,
-    volume: settings.tts.volume,
+    voice: settings?.tts?.voice || 'en-US-AriaNeural',
+    rate: settings?.tts?.rate || '+0%',
+    volume: settings?.tts?.volume || '+0%',
   });
 
   // Auto-scroll to bottom of messages
@@ -122,10 +133,10 @@ function App() {
     try {
       // Use backend API service
       const response = await api.chat({
-        model: settings.model,
+        model: settings?.model || 'gemma3:1b',
         messages: updatedMessages.map(({ id, timestamp, ...rest }) => rest),
-        temperature: settings.temperature,
-        max_tokens: settings.maxTokens,
+        temperature: settings?.temperature || 0.7,
+        max_tokens: settings?.maxTokens || 2000,
       });
       
       // Handle API response format
@@ -153,7 +164,7 @@ function App() {
       setMessages(finalMessages);
       
       // Auto-speak assistant responses if enabled
-      if (settings.tts.enabled && settings.tts.autoSpeak === 'assistant-only') {
+      if (settings?.tts?.enabled && settings?.tts?.autoSpeak === 'assistant-only') {
         speak(assistantMessage.content);
       }
     } catch (error) {
@@ -226,7 +237,7 @@ function App() {
               <Menu shadow="md" width={200}>
                 <Menu.Target>
                   <Button variant="light" fullWidth>
-                    {settings.model}
+                    {settings?.model || 'Loading...'}
                   </Button>
                 </Menu.Target>
                 <Menu.Dropdown>
@@ -239,7 +250,7 @@ function App() {
                     <Menu.Item 
                       key={model} 
                       onClick={() => updateSettings({ model })}
-                      bg={settings.model === model ? 'var(--mantine-color-blue-light)' : undefined}
+                      bg={settings?.model === model ? 'var(--mantine-color-blue-light)' : undefined}
                     >
                       {model}
                     </Menu.Item>
@@ -297,7 +308,7 @@ function App() {
                       <Text fw={500} c={message.role === 'assistant' ? 'blue' : 'green'}>
                         {message.role === 'assistant' ? 'Assistant' : 'You'}
                       </Text>
-                      {message.role === 'assistant' && settings.tts.enabled && (
+                      {message.role === 'assistant' && settings?.tts?.enabled && (
                         <ActionIcon 
                           variant="subtle" 
                           size="sm"
