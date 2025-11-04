@@ -1,0 +1,142 @@
+/* Base styles */
+:root {
+  --mantine-color-body: #ffffff;
+  --mantine-color-gray-0: #f8f9fa;
+  --mantine-color-gray-1: #f1f3f5;
+  --mantine-color-gray-2: #e9ecef;
+  --mantine-color-gray-3: #dee2e6;
+  --mantine-color-gray-4: #ced4da;
+  --mantine-color-gray-5: #adb5bd;
+  --mantine-color-gray-6: #868e96;
+  --mantine-color-gray-7: #495057;
+  --mantine-color-gray-8: #343a40;
+  --mantine-color-gray-9: #212529;
+  --mantine-color-dark-0: #f8f9fa;
+  --mantine-color-dark-1: #f1f3f5;
+  --mantine-color-dark-2: #e9ecef;
+  --mantine-color-dark-3: #dee2e6;
+  --mantine-color-dark-4: #ced4da;
+  --mantine-color-dark-5: #adb5bd;
+  --mantine-color-dark-6: #868e96;
+  --mantine-color-dark-7: #495057;
+  --mantine-color-dark-8: #343a40;
+  --mantine-color-dark-9: #212529;
+  --mantine-color-primary-0: #e3f2fd;
+  --mantine-color-primary-1: #bbdefb;
+  --mantine-color-primary-2: #90caf9;
+  --mantine-color-primary-3: #64b5f6;
+  --mantine-color-primary-4: #42a5f5;
+  --mantine-color-primary-5: #2196f3;
+  --mantine-color-primary-6: #1e88e5;
+  --mantine-color-primary-7: #1976d2;
+  --mantine-color-primary-8: #1565c0;
+  --mantine-color-primary-9: #0d47a1;
+  --mantine-color-red-6: #f44336;
+  --mantine-spacing-xs: 8px;
+  --mantine-spacing-sm: 12px;
+  --mantine-spacing-md: 16px;
+  --mantine-spacing-lg: 24px;
+  --mantine-spacing-xl: 32px;
+}
+
+/* Dark theme overrides */
+[data-mantine-color-scheme="dark"] {
+  --mantine-color-body: #1a1b1e;
+  --mantine-color-gray-0: #1a1b1e;
+  --mantine-color-gray-1: #25262b;
+  --mantine-color-gray-2: #2c2e33;
+  --mantine-color-gray-3: #373a40;
+  --mantine-color-gray-4: #3e434a;
+  --mantine-color-gray-5: #4d4f55;
+  --mantine-color-gray-6: #5c5f66;
+  --mantine-color-gray-7: #6c7078;
+  --mantine-color-gray-8: #7c818c;
+  --mantine-color-gray-9: #8c91a0;
+  --mantine-color-dark-0: #1a1b1e;
+  --mantine-color-dark-1: #25262b;
+  --mantine-color-dark-2: #2c2e33;
+  --mantine-color-dark-3: #373a40;
+  --mantine-color-dark-4: #3e434a;
+  --mantine-color-dark-5: #4d4f55;
+  --mantine-color-dark-6: #5c5f66;
+  --mantine-color-dark-7: #6c7078;
+  --mantine-color-dark-8: #7c818c;
+  --mantine-color-dark-9: #8c91a0;
+}
+
+/* Base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Utility classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--mantine-color-gray-1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--mantine-color-gray-4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mantine-color-gray-6);
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  pre, code {
+    white-space: pre-wrap !important;
+  }
+}

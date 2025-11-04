@@ -1,0 +1,15 @@
+@mantine/core>=7.0.0
+@mantine/hooks>=7.0.0
+@mantine/notifications>=7.0.0
+@mantine/modals>=7.0.0
+@tabler/icons-react
+react-markdown
+rehype-highlight
+rehype-raw
+@types/react
+@types/react-dom
+@types/node
+@vitejs/plugin-react
+@types/react-syntax-highlighter
+@types/rehype-highlight
+@types/rehype-raw

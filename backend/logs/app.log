@@ -1,0 +1,1067 @@
+2025-09-16 08:15:16.422 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 08:15:16.423 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 08:17:27.652 | INFO     | main:log_requests:73 - Request: HEAD http://localhost:8000/
+2025-09-16 08:17:27.652 | INFO     | main:log_requests:83 - Request completed in 0.47ms | Status: 404
+2025-09-16 08:19:43.150 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/health
+2025-09-16 08:19:43.151 | INFO     | main:log_requests:83 - Request completed in 1.28ms | Status: 404
+2025-09-16 08:19:56.004 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/health
+2025-09-16 08:19:56.005 | INFO     | main:log_requests:83 - Request completed in 1.01ms | Status: 404
+2025-09-16 08:21:02.925 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 08:21:02.926 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 08:22:17.400 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/health
+2025-09-16 08:22:18.119 | INFO     | main:log_requests:83 - Request completed in 719.26ms | Status: 200
+2025-09-16 08:24:02.633 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/health
+2025-09-16 08:24:03.297 | INFO     | main:log_requests:83 - Request completed in 663.88ms | Status: 200
+2025-09-16 08:53:55.069 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:53:55.877 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:53:56.625 | INFO     | main:log_requests:83 - Request completed in 748.17ms | Status: 200
+2025-09-16 08:53:56.625 | INFO     | main:log_requests:83 - Request completed in 1556.18ms | Status: 200
+2025-09-16 08:53:56.636 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:53:57.033 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:53:57.728 | INFO     | main:log_requests:83 - Request completed in 695.47ms | Status: 200
+2025-09-16 08:53:57.731 | INFO     | main:log_requests:83 - Request completed in 1094.89ms | Status: 200
+2025-09-16 08:53:57.733 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:53:58.490 | INFO     | main:log_requests:83 - Request completed in 756.92ms | Status: 200
+2025-09-16 08:53:58.492 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:53:59.173 | INFO     | main:log_requests:83 - Request completed in 680.92ms | Status: 200
+2025-09-16 08:53:59.175 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:53:59.879 | INFO     | main:log_requests:83 - Request completed in 704.51ms | Status: 200
+2025-09-16 08:53:59.882 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:54:00.863 | INFO     | main:log_requests:83 - Request completed in 981.14ms | Status: 200
+2025-09-16 08:54:00.865 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:54:01.664 | INFO     | main:log_requests:83 - Request completed in 799.01ms | Status: 200
+2025-09-16 08:55:45.045 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:45.714 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:46.416 | INFO     | main:log_requests:83 - Request completed in 701.94ms | Status: 200
+2025-09-16 08:55:46.418 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:46.938 | INFO     | main:log_requests:83 - Request completed in 1893.55ms | Status: 200
+2025-09-16 08:55:46.951 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:47.421 | INFO     | main:log_requests:83 - Request completed in 1002.82ms | Status: 200
+2025-09-16 08:55:47.424 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:47.874 | INFO     | main:log_requests:83 - Request completed in 922.74ms | Status: 200
+2025-09-16 08:55:48.122 | INFO     | main:log_requests:83 - Request completed in 697.31ms | Status: 200
+2025-09-16 08:55:48.125 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:49.032 | INFO     | main:log_requests:83 - Request completed in 907.59ms | Status: 200
+2025-09-16 08:55:49.036 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:49.479 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:50.256 | INFO     | main:log_requests:83 - Request completed in 1220.55ms | Status: 200
+2025-09-16 08:55:50.259 | INFO     | main:log_requests:83 - Request completed in 780.05ms | Status: 200
+2025-09-16 08:55:50.260 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:50.639 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:51.387 | INFO     | main:log_requests:83 - Request completed in 747.91ms | Status: 200
+2025-09-16 08:55:51.387 | INFO     | main:log_requests:83 - Request completed in 1127.21ms | Status: 200
+2025-09-16 08:55:51.390 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:52.126 | INFO     | main:log_requests:83 - Request completed in 735.97ms | Status: 200
+2025-09-16 08:55:52.128 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:52.742 | INFO     | main:log_requests:83 - Request completed in 614.87ms | Status: 200
+2025-09-16 08:55:52.744 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:53.334 | INFO     | main:log_requests:83 - Request completed in 590.08ms | Status: 200
+2025-09-16 08:55:53.336 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:53.912 | INFO     | main:log_requests:83 - Request completed in 575.92ms | Status: 200
+2025-09-16 08:55:53.913 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 08:55:54.493 | INFO     | main:log_requests:83 - Request completed in 579.76ms | Status: 200
+2025-09-16 09:08:26.090 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:08:26.670 | INFO     | main:log_requests:83 - Request completed in 580.73ms | Status: 200
+2025-09-16 09:08:44.794 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:08:44.798 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 1
+2025-09-16 09:08:44.799 | ERROR    | main:chat:212 - Chat error: 'State' object has no attribute 'limiter'
+2025-09-16 09:08:44.800 | ERROR    | main:http_exception_handler:90 - HTTP error: An error occurred while processing your request
+2025-09-16 09:08:44.800 | INFO     | main:log_requests:83 - Request completed in 7.62ms | Status: 500
+2025-09-16 09:08:55.254 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:08:55.256 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 3
+2025-09-16 09:08:55.256 | ERROR    | main:chat:212 - Chat error: 'State' object has no attribute 'limiter'
+2025-09-16 09:08:55.257 | ERROR    | main:http_exception_handler:90 - HTTP error: An error occurred while processing your request
+2025-09-16 09:08:55.257 | INFO     | main:log_requests:83 - Request completed in 2.56ms | Status: 500
+2025-09-16 09:22:45.613 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:22:45.614 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 5
+2025-09-16 09:22:45.615 | ERROR    | main:chat:212 - Chat error: 'State' object has no attribute 'limiter'
+2025-09-16 09:22:45.616 | ERROR    | main:http_exception_handler:90 - HTTP error: An error occurred while processing your request
+2025-09-16 09:22:45.617 | INFO     | main:log_requests:83 - Request completed in 4.21ms | Status: 500
+2025-09-16 09:34:03.671 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:04.210 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:04.988 | INFO     | main:log_requests:83 - Request completed in 778.21ms | Status: 200
+2025-09-16 09:34:04.990 | INFO     | main:log_requests:83 - Request completed in 1319.62ms | Status: 200
+2025-09-16 09:34:04.992 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:05.561 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:06.295 | INFO     | main:log_requests:83 - Request completed in 733.82ms | Status: 200
+2025-09-16 09:34:06.296 | INFO     | main:log_requests:83 - Request completed in 1303.60ms | Status: 200
+2025-09-16 09:34:06.299 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:06.950 | INFO     | main:log_requests:83 - Request completed in 651.13ms | Status: 200
+2025-09-16 09:34:06.951 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:07.651 | INFO     | main:log_requests:83 - Request completed in 699.56ms | Status: 200
+2025-09-16 09:34:07.656 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:08.337 | INFO     | main:log_requests:83 - Request completed in 680.96ms | Status: 200
+2025-09-16 09:34:08.339 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:09.041 | INFO     | main:log_requests:83 - Request completed in 702.03ms | Status: 200
+2025-09-16 09:34:09.043 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:09.723 | INFO     | main:log_requests:83 - Request completed in 680.44ms | Status: 200
+2025-09-16 09:34:29.570 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:29.918 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:30.546 | INFO     | main:log_requests:83 - Request completed in 628.56ms | Status: 200
+2025-09-16 09:34:30.547 | INFO     | main:log_requests:83 - Request completed in 977.50ms | Status: 200
+2025-09-16 09:34:30.548 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:31.068 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:31.715 | INFO     | main:log_requests:83 - Request completed in 1167.76ms | Status: 200
+2025-09-16 09:34:31.717 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:32.022 | INFO     | main:log_requests:83 - Request completed in 953.94ms | Status: 200
+2025-09-16 09:34:32.300 | INFO     | main:log_requests:83 - Request completed in 582.78ms | Status: 200
+2025-09-16 09:34:32.301 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:32.860 | INFO     | main:log_requests:83 - Request completed in 558.89ms | Status: 200
+2025-09-16 09:34:32.861 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:33.406 | INFO     | main:log_requests:83 - Request completed in 545.40ms | Status: 200
+2025-09-16 09:34:33.408 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:33.959 | INFO     | main:log_requests:83 - Request completed in 551.05ms | Status: 200
+2025-09-16 09:34:33.960 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:34.604 | INFO     | main:log_requests:83 - Request completed in 643.24ms | Status: 200
+2025-09-16 09:34:44.737 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:45.079 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:45.482 | INFO     | main:log_requests:83 - Request completed in 744.14ms | Status: 200
+2025-09-16 09:34:45.488 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:45.854 | INFO     | main:log_requests:83 - Request completed in 774.94ms | Status: 200
+2025-09-16 09:34:45.857 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:46.302 | INFO     | main:log_requests:83 - Request completed in 813.87ms | Status: 200
+2025-09-16 09:34:46.564 | INFO     | main:log_requests:83 - Request completed in 707.62ms | Status: 200
+2025-09-16 09:34:46.566 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:34:47.156 | INFO     | main:log_requests:83 - Request completed in 590.57ms | Status: 200
+2025-09-16 09:34:54.142 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:34:54.144 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 1
+2025-09-16 09:34:54.145 | ERROR    | main:chat:212 - Chat error: 'State' object has no attribute 'limiter'
+2025-09-16 09:34:54.145 | ERROR    | main:http_exception_handler:90 - HTTP error: An error occurred while processing your request
+2025-09-16 09:34:54.146 | INFO     | main:log_requests:83 - Request completed in 3.52ms | Status: 500
+2025-09-16 09:36:09.025 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/
+2025-09-16 09:36:09.030 | INFO     | main:log_requests:83 - Request completed in 5.60ms | Status: 404
+2025-09-16 09:36:09.186 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/.well-known/appspecific/com.chrome.devtools.json
+2025-09-16 09:36:09.187 | INFO     | main:log_requests:83 - Request completed in 1.61ms | Status: 404
+2025-09-16 09:36:10.334 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/favicon.ico
+2025-09-16 09:36:10.334 | INFO     | main:log_requests:83 - Request completed in 0.53ms | Status: 404
+2025-09-16 09:37:58.020 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:37:58.353 | INFO     | main:log_requests:73 - Request: OPTIONS http://localhost:8000/api/tags
+2025-09-16 09:37:58.354 | INFO     | main:log_requests:73 - Request: OPTIONS http://localhost:8000/api/tags
+2025-09-16 09:37:58.356 | INFO     | main:log_requests:83 - Request completed in 2.90ms | Status: 200
+2025-09-16 09:37:58.357 | INFO     | main:log_requests:83 - Request completed in 2.62ms | Status: 200
+2025-09-16 09:37:58.634 | INFO     | main:log_requests:83 - Request completed in 614.19ms | Status: 200
+2025-09-16 09:37:58.635 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:37:59.258 | INFO     | main:log_requests:83 - Request completed in 622.88ms | Status: 200
+2025-09-16 09:37:59.261 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:37:59.867 | INFO     | main:log_requests:83 - Request completed in 605.79ms | Status: 200
+2025-09-16 09:37:59.868 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:38:00.514 | INFO     | main:log_requests:83 - Request completed in 645.64ms | Status: 200
+2025-09-16 09:38:00.515 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:38:01.096 | INFO     | main:log_requests:83 - Request completed in 580.73ms | Status: 200
+2025-09-16 09:38:01.097 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:38:01.762 | INFO     | main:log_requests:83 - Request completed in 664.00ms | Status: 200
+2025-09-16 09:38:01.763 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:38:02.429 | INFO     | main:log_requests:83 - Request completed in 666.08ms | Status: 200
+2025-09-16 09:38:02.432 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:38:03.173 | INFO     | main:log_requests:83 - Request completed in 741.66ms | Status: 200
+2025-09-16 09:38:03.175 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:38:03.786 | INFO     | main:log_requests:83 - Request completed in 610.62ms | Status: 200
+2025-09-16 09:38:27.026 | INFO     | main:log_requests:73 - Request: OPTIONS http://localhost:8000/api/chat
+2025-09-16 09:38:27.027 | INFO     | main:log_requests:83 - Request completed in 1.01ms | Status: 200
+2025-09-16 09:38:27.031 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:38:27.032 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 1
+2025-09-16 09:38:27.033 | ERROR    | main:chat:212 - Chat error: 'State' object has no attribute 'limiter'
+2025-09-16 09:38:27.033 | ERROR    | main:http_exception_handler:90 - HTTP error: An error occurred while processing your request
+2025-09-16 09:38:27.035 | INFO     | main:log_requests:83 - Request completed in 3.68ms | Status: 500
+2025-09-16 09:38:34.112 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/health
+2025-09-16 09:38:34.801 | INFO     | main:log_requests:83 - Request completed in 689.40ms | Status: 200
+2025-09-16 09:39:09.842 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:39:10.421 | INFO     | main:log_requests:83 - Request completed in 579.67ms | Status: 200
+2025-09-16 09:39:11.642 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:39:12.284 | INFO     | main:log_requests:83 - Request completed in 641.81ms | Status: 200
+2025-09-16 09:39:13.841 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:39:14.406 | INFO     | main:log_requests:83 - Request completed in 565.61ms | Status: 200
+2025-09-16 09:39:17.808 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:39:18.522 | INFO     | main:log_requests:83 - Request completed in 714.05ms | Status: 200
+2025-09-16 09:39:56.049 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:39:56.049 | INFO     | main:chat:171 - Chat request - Model: gemma3:1b, Messages: 1
+2025-09-16 09:39:56.050 | ERROR    | main:chat:212 - Chat error: 'State' object has no attribute 'limiter'
+2025-09-16 09:39:56.050 | ERROR    | main:http_exception_handler:90 - HTTP error: An error occurred while processing your request
+2025-09-16 09:39:56.050 | INFO     | main:log_requests:83 - Request completed in 1.83ms | Status: 500
+2025-09-16 09:42:03.519 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:42:04.164 | INFO     | main:log_requests:83 - Request completed in 644.47ms | Status: 200
+2025-09-16 09:42:10.192 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:42:10.960 | INFO     | main:log_requests:83 - Request completed in 768.02ms | Status: 200
+2025-09-16 09:42:20.849 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:42:21.545 | INFO     | main:log_requests:83 - Request completed in 696.32ms | Status: 200
+2025-09-16 09:42:23.253 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:42:23.922 | INFO     | main:log_requests:83 - Request completed in 669.02ms | Status: 200
+2025-09-16 09:42:39.714 | INFO     | main:lifespan:34 - Shutting down application...
+2025-09-16 09:42:41.133 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 09:42:41.134 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 09:46:52.634 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 09:46:52.634 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 09:47:46.449 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:47:46.450 | INFO     | main:chat:171 - Chat request - Model: gemma3:1b, Messages: 1
+2025-09-16 09:47:46.451 | ERROR    | main:chat:212 - Chat error: 'State' object has no attribute 'limiter'
+2025-09-16 09:47:46.452 | ERROR    | main:http_exception_handler:90 - HTTP error: An error occurred while processing your request
+2025-09-16 09:47:46.452 | INFO     | main:log_requests:83 - Request completed in 2.43ms | Status: 500
+2025-09-16 09:50:41.433 | INFO     | main:lifespan:34 - Shutting down application...
+2025-09-16 09:50:42.851 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 09:50:42.853 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 09:53:24.652 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 09:53:24.653 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 09:53:35.708 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:53:35.709 | INFO     | main:chat:171 - Chat request - Model: gemma3:1b, Messages: 1
+2025-09-16 09:53:42.768 | INFO     | main:chat:201 - Chat response - Status: 200
+2025-09-16 09:53:42.771 | INFO     | main:log_requests:83 - Request completed in 7062.45ms | Status: 200
+2025-09-16 09:54:39.818 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 09:54:39.828 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 09:55:14.011 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:14.426 | INFO     | main:log_requests:73 - Request: OPTIONS http://localhost:8000/api/tags
+2025-09-16 09:55:14.428 | INFO     | main:log_requests:73 - Request: OPTIONS http://localhost:8000/api/tags
+2025-09-16 09:55:14.430 | INFO     | main:log_requests:83 - Request completed in 3.32ms | Status: 200
+2025-09-16 09:55:14.430 | INFO     | main:log_requests:83 - Request completed in 2.22ms | Status: 200
+2025-09-16 09:55:14.683 | INFO     | main:log_requests:83 - Request completed in 672.14ms | Status: 200
+2025-09-16 09:55:14.686 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:15.394 | INFO     | main:log_requests:83 - Request completed in 708.92ms | Status: 200
+2025-09-16 09:55:15.398 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:16.116 | INFO     | main:log_requests:83 - Request completed in 717.85ms | Status: 200
+2025-09-16 09:55:16.118 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:16.765 | INFO     | main:log_requests:83 - Request completed in 647.02ms | Status: 200
+2025-09-16 09:55:16.768 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:17.493 | INFO     | main:log_requests:83 - Request completed in 725.34ms | Status: 200
+2025-09-16 09:55:17.495 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:18.084 | INFO     | main:log_requests:83 - Request completed in 588.93ms | Status: 200
+2025-09-16 09:55:18.086 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:18.676 | INFO     | main:log_requests:83 - Request completed in 590.01ms | Status: 200
+2025-09-16 09:55:18.679 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:19.281 | INFO     | main:log_requests:83 - Request completed in 602.77ms | Status: 200
+2025-09-16 09:55:24.984 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:25.383 | INFO     | main:log_requests:73 - Request: OPTIONS http://localhost:8000/api/tags
+2025-09-16 09:55:25.384 | INFO     | main:log_requests:73 - Request: OPTIONS http://localhost:8000/api/tags
+2025-09-16 09:55:25.385 | INFO     | main:log_requests:83 - Request completed in 2.16ms | Status: 200
+2025-09-16 09:55:25.385 | INFO     | main:log_requests:83 - Request completed in 2.17ms | Status: 200
+2025-09-16 09:55:25.645 | INFO     | main:log_requests:83 - Request completed in 660.21ms | Status: 200
+2025-09-16 09:55:25.648 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:26.283 | INFO     | main:log_requests:83 - Request completed in 635.98ms | Status: 200
+2025-09-16 09:55:26.286 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:26.935 | INFO     | main:log_requests:83 - Request completed in 649.33ms | Status: 200
+2025-09-16 09:55:26.937 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:27.571 | INFO     | main:log_requests:83 - Request completed in 634.03ms | Status: 200
+2025-09-16 09:55:27.573 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:28.192 | INFO     | main:log_requests:83 - Request completed in 618.98ms | Status: 200
+2025-09-16 09:55:28.194 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:28.798 | INFO     | main:log_requests:83 - Request completed in 604.43ms | Status: 200
+2025-09-16 09:55:28.800 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:29.391 | INFO     | main:log_requests:83 - Request completed in 590.59ms | Status: 200
+2025-09-16 09:55:29.392 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:29.967 | INFO     | main:log_requests:83 - Request completed in 575.38ms | Status: 200
+2025-09-16 09:55:29.969 | INFO     | main:log_requests:73 - Request: GET http://localhost:8000/api/tags
+2025-09-16 09:55:30.532 | INFO     | main:log_requests:83 - Request completed in 563.57ms | Status: 200
+2025-09-16 09:55:32.924 | INFO     | main:log_requests:73 - Request: OPTIONS http://localhost:8000/api/chat
+2025-09-16 09:55:32.930 | INFO     | main:log_requests:83 - Request completed in 6.04ms | Status: 200
+2025-09-16 09:55:32.933 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:55:32.934 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 1
+2025-09-16 09:55:48.595 | INFO     | main:chat:201 - Chat response - Status: 200
+2025-09-16 09:55:48.597 | INFO     | main:log_requests:83 - Request completed in 15664.24ms | Status: 200
+2025-09-16 09:56:06.281 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:56:06.281 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 3
+2025-09-16 09:56:16.485 | INFO     | main:chat:201 - Chat response - Status: 200
+2025-09-16 09:56:16.489 | INFO     | main:log_requests:83 - Request completed in 10208.18ms | Status: 200
+2025-09-16 09:58:08.034 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 09:58:08.037 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 5
+2025-09-16 09:58:47.454 | INFO     | main:chat:201 - Chat response - Status: 200
+2025-09-16 09:58:47.457 | INFO     | main:log_requests:83 - Request completed in 39423.42ms | Status: 200
+2025-09-16 09:59:53.390 | INFO     | main:lifespan:34 - Shutting down application...
+2025-09-16 09:59:55.252 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 09:59:55.253 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 09:59:56.468 | INFO     | main:lifespan:24 - Starting application...
+2025-09-16 09:59:56.469 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 10:00:36.407 | INFO     | main:log_requests:73 - Request: POST http://localhost:8000/api/chat
+2025-09-16 10:00:36.408 | INFO     | main:chat:171 - Chat request - Model: taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest, Messages: 7
+2025-09-16 10:01:16.106 | INFO     | main:chat:201 - Chat response - Status: 200
+2025-09-16 10:01:16.108 | INFO     | main:log_requests:83 - Request completed in 39700.83ms | Status: 200
+2025-09-16 10:01:16.214 | INFO     | main:lifespan:34 - Shutting down application...
+2025-09-16 10:04:37.929 | INFO     | main:lifespan:34 - Shutting down application...
+2025-09-16 14:39:12.454 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 14:39:12.453 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 14:39:12.454 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 14:39:12.454 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 14:39:12.464 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.464 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.464 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.466 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.466 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.466 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.467 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.467 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.467 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.467 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.468 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.468 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.468 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.468 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:12.470 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/tags
+2025-09-16 14:39:16.716 | INFO     | main:log_requests:86 - Request completed in 4247.97ms | Status: 200
+2025-09-16 14:39:16.717 | INFO     | main:log_requests:86 - Request completed in 4252.76ms | Status: 200
+2025-09-16 14:39:16.717 | INFO     | main:log_requests:86 - Request completed in 4252.76ms | Status: 200
+2025-09-16 14:39:16.717 | INFO     | main:log_requests:86 - Request completed in 4250.10ms | Status: 200
+2025-09-16 14:39:16.719 | INFO     | main:log_requests:86 - Request completed in 4253.02ms | Status: 200
+2025-09-16 14:39:16.719 | INFO     | main:log_requests:86 - Request completed in 4251.00ms | Status: 200
+2025-09-16 14:39:16.720 | INFO     | main:log_requests:86 - Request completed in 4253.04ms | Status: 200
+2025-09-16 14:39:16.720 | INFO     | main:log_requests:86 - Request completed in 4253.04ms | Status: 200
+2025-09-16 14:39:16.721 | INFO     | main:log_requests:86 - Request completed in 4252.55ms | Status: 200
+2025-09-16 14:39:16.721 | INFO     | main:log_requests:86 - Request completed in 4254.06ms | Status: 200
+2025-09-16 14:39:16.721 | INFO     | main:log_requests:86 - Request completed in 4254.57ms | Status: 200
+2025-09-16 14:39:16.722 | INFO     | main:log_requests:86 - Request completed in 4252.03ms | Status: 200
+2025-09-16 14:39:16.723 | INFO     | main:log_requests:86 - Request completed in 4258.73ms | Status: 200
+2025-09-16 14:39:16.723 | INFO     | main:log_requests:86 - Request completed in 4257.23ms | Status: 200
+2025-09-16 14:39:16.723 | INFO     | main:log_requests:86 - Request completed in 4255.08ms | Status: 200
+2025-09-16 14:39:27.819 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 14:39:27.820 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 14:48:11.949 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 14:48:11.949 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 14:50:50.440 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 14:50:50.440 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 14:53:07.104 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 14:53:07.104 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 15:30:50.744 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 15:30:50.745 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 19:58:40.542 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 19:58:40.543 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 20:00:05.041 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 20:00:05.042 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-16 20:00:32.309 | INFO     | main:lifespan:27 - Starting application...
+2025-09-16 20:00:32.310 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 07:18:09.443 | INFO     | main:lifespan:27 - Starting application...
+2025-09-17 07:18:09.446 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 07:20:56.794 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/chat
+2025-09-17 07:20:56.794 | INFO     | main:log_requests:86 - Request completed in 0.00ms | Status: 200
+2025-09-17 07:20:56.796 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-09-17 07:20:56.797 | INFO     | main:chat:183 - Chat request - Model: llama3, Messages: 2
+2025-09-17 07:20:57.495 | ERROR    | main:chat:223 - Ollama API error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-09-17 07:20:57.495 | ERROR    | main:http_exception_handler:93 - HTTP error: Ollama API error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-09-17 07:20:57.497 | INFO     | main:log_requests:86 - Request completed in 700.71ms | Status: 404
+2025-09-17 07:21:07.256 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/tts
+2025-09-17 07:21:07.257 | INFO     | main:log_requests:86 - Request completed in 1.01ms | Status: 200
+2025-09-17 07:21:07.260 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/tts
+2025-09-17 07:21:07.261 | ERROR    | main:http_exception_handler:93 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-09-17 07:21:07.265 | INFO     | main:log_requests:86 - Request completed in 5.01ms | Status: 500
+2025-09-17 07:22:00.710 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-09-17 07:22:00.711 | INFO     | main:chat:183 - Chat request - Model: llama3, Messages: 4
+2025-09-17 07:22:01.300 | ERROR    | main:chat:223 - Ollama API error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-09-17 07:22:01.302 | ERROR    | main:http_exception_handler:93 - HTTP error: Ollama API error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-09-17 07:22:01.302 | INFO     | main:log_requests:86 - Request completed in 591.75ms | Status: 404
+2025-09-17 07:23:49.305 | INFO     | main:lifespan:27 - Starting application...
+2025-09-17 07:23:49.306 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 07:25:08.931 | INFO     | main:lifespan:27 - Starting application...
+2025-09-17 07:25:08.931 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 07:25:46.449 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/chat
+2025-09-17 07:25:46.451 | INFO     | main:log_requests:86 - Request completed in 0.51ms | Status: 200
+2025-09-17 07:25:46.453 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-09-17 07:25:46.454 | INFO     | main:chat:183 - Chat request - Model: llama3, Messages: 6
+2025-09-17 07:25:47.063 | ERROR    | main:chat:223 - Ollama API error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-09-17 07:25:47.064 | ERROR    | main:http_exception_handler:93 - HTTP error: Ollama API error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-09-17 07:25:47.064 | INFO     | main:log_requests:86 - Request completed in 611.63ms | Status: 404
+2025-09-17 07:27:13.601 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/chat
+2025-09-17 07:27:13.602 | INFO     | main:log_requests:86 - Request completed in 1.55ms | Status: 200
+2025-09-17 07:27:13.604 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-09-17 07:27:13.605 | INFO     | main:chat:183 - Chat request - Model: llama3, Messages: 2
+2025-09-17 07:27:14.193 | ERROR    | main:chat:223 - Ollama API error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-09-17 07:27:14.194 | ERROR    | main:http_exception_handler:93 - HTTP error: Ollama API error: Client error '404 Not Found' for url 'http://localhost:11434/api/chat'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2025-09-17 07:27:14.194 | INFO     | main:log_requests:86 - Request completed in 590.17ms | Status: 404
+2025-09-17 07:28:14.496 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/api/chat/completions
+2025-09-17 07:28:14.497 | INFO     | main:log_requests:86 - Request completed in 0.97ms | Status: 200
+2025-09-17 07:28:14.498 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/api/chat/completions
+2025-09-17 07:28:14.501 | INFO     | main:log_requests:86 - Request completed in 1.65ms | Status: 404
+2025-09-17 07:28:44.304 | INFO     | main:lifespan:27 - Starting application...
+2025-09-17 07:28:44.304 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 07:29:08.675 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/api/chat/completions
+2025-09-17 07:29:08.677 | INFO     | main:log_requests:86 - Request completed in 1.78ms | Status: 404
+2025-09-17 07:29:15.804 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/tts
+2025-09-17 07:29:15.805 | INFO     | main:log_requests:86 - Request completed in 1.05ms | Status: 200
+2025-09-17 07:29:15.807 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/tts
+2025-09-17 07:29:15.808 | ERROR    | main:http_exception_handler:93 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-09-17 07:29:15.809 | INFO     | main:log_requests:86 - Request completed in 2.00ms | Status: 500
+2025-09-17 07:31:54.850 | INFO     | main:lifespan:27 - Starting application...
+2025-09-17 07:31:54.851 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 07:32:31.697 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/api/chat/completions
+2025-09-17 07:32:31.699 | INFO     | main:log_requests:86 - Request completed in 2.11ms | Status: 404
+2025-09-17 07:34:31.865 | INFO     | main:lifespan:37 - Shutting down application...
+2025-09-17 07:55:07.467 | INFO     | main:lifespan:27 - Starting application...
+2025-09-17 07:55:07.467 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 07:57:28.254 | INFO     | main:lifespan:27 - Starting application...
+2025-09-17 07:57:28.255 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 07:57:40.753 | INFO     | main:log_requests:76 - Request: GET http://localhost:8000/api/health
+2025-09-17 07:57:41.366 | INFO     | main:log_requests:86 - Request completed in 612.73ms | Status: 200
+2025-09-17 08:02:08.275 | INFO     | main:lifespan:27 - Starting application...
+2025-09-17 08:02:08.275 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-09-17 08:02:26.737 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/api/chat/completions
+2025-09-17 08:02:26.737 | INFO     | main:log_requests:86 - Request completed in 0.00ms | Status: 200
+2025-09-17 08:02:26.740 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/api/chat/completions
+2025-09-17 08:02:26.742 | INFO     | main:log_requests:86 - Request completed in 2.01ms | Status: 404
+2025-09-18 14:28:18.928 | INFO     | main:lifespan:27 - Starting application...
+2025-09-18 14:28:18.930 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-10-05 22:36:30.257 | INFO     | main:lifespan:27 - Starting application...
+2025-10-05 22:36:30.257 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-10-05 22:37:32.317 | INFO     | main:lifespan:27 - Starting application...
+2025-10-05 22:37:32.317 | INFO     | main:lifespan:28 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8000,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
