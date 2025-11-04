@@ -1112,3 +1112,81 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-11-04 15:44:30.496 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/tts
 2025-11-04 15:44:30.498 | ERROR    | main:http_exception_handler:93 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
 2025-11-04 15:44:30.499 | INFO     | main:log_requests:86 - Request completed in 3.00ms | Status: 500
+2025-11-04 15:54:49.247 | INFO     | main:lifespan:24 - Starting application...
+2025-11-04 15:54:49.276 | INFO     | main:lifespan:25 - Environment: {
+  "APP_NAME": "Ollama Chat API",
+  "APP_VERSION": "1.0.0",
+  "DEBUG": true,
+  "HOST": "0.0.0.0",
+  "PORT": 8001,
+  "RELOAD": true,
+  "CORS_ORIGINS": [
+    "*"
+  ],
+  "CORS_METHODS": [
+    "*"
+  ],
+  "CORS_HEADERS": [
+    "*"
+  ],
+  "OLLAMA_BASE_URL": "http://localhost:11434",
+  "OLLAMA_TIMEOUT": 300,
+  "RATE_LIMIT": "100/minute",
+  "SECRET_KEY": "your-secret-key-here",
+  "ALGORITHM": "HS256",
+  "ACCESS_TOKEN_EXPIRE_MINUTES": 10080
+}
+2025-11-04 15:55:02.818 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/chat
+2025-11-04 15:55:02.822 | INFO     | main:log_requests:86 - Request completed in 4.53ms | Status: 200
+2025-11-04 15:55:02.854 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-11-04 15:55:02.859 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 4
+2025-11-04 15:55:50.517 | INFO     | main:chat:213 - Chat response - Status: 200
+2025-11-04 15:55:50.521 | INFO     | main:log_requests:86 - Request completed in 47666.15ms | Status: 200
+2025-11-04 15:57:16.721 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-11-04 15:57:16.726 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 2
+2025-11-04 15:57:19.002 | INFO     | main:chat:213 - Chat response - Status: 200
+2025-11-04 15:57:19.004 | INFO     | main:log_requests:86 - Request completed in 2282.43ms | Status: 200
+2025-11-04 15:57:27.346 | INFO     | main:log_requests:69 - Request: OPTIONS http://localhost:8001/api/tts
+2025-11-04 15:57:27.386 | INFO     | main:log_requests:79 - Request completed in 40.77ms | Status: 200
+2025-11-04 15:57:27.452 | INFO     | main:log_requests:69 - Request: POST http://localhost:8001/api/tts
+2025-11-04 15:57:27.521 | ERROR    | main:http_exception_handler:86 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-11-04 15:57:27.560 | INFO     | main:log_requests:79 - Request completed in 108.03ms | Status: 500
+2025-11-04 15:59:01.908 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-11-04 15:59:01.912 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 4
+2025-11-04 15:59:12.042 | INFO     | main:chat:213 - Chat response - Status: 200
+2025-11-04 15:59:12.044 | INFO     | main:log_requests:86 - Request completed in 10136.23ms | Status: 200
+2025-11-04 15:59:20.551 | INFO     | main:log_requests:69 - Request: POST http://localhost:8001/api/tts
+2025-11-04 15:59:20.582 | ERROR    | main:http_exception_handler:86 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-11-04 15:59:20.623 | INFO     | main:log_requests:79 - Request completed in 71.81ms | Status: 500
+2025-11-04 16:02:02.821 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-11-04 16:02:02.824 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 6
+2025-11-04 16:02:09.219 | INFO     | main:chat:213 - Chat response - Status: 200
+2025-11-04 16:02:09.223 | INFO     | main:log_requests:86 - Request completed in 6401.91ms | Status: 200
+2025-11-04 16:02:10.061 | INFO     | main:log_requests:69 - Request: POST http://localhost:8001/api/tts
+2025-11-04 16:02:10.079 | ERROR    | main:http_exception_handler:86 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-11-04 16:02:10.105 | INFO     | main:log_requests:79 - Request completed in 45.37ms | Status: 500
+2025-11-04 16:02:25.552 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-11-04 16:02:25.554 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 8
+2025-11-04 16:02:37.849 | INFO     | main:chat:213 - Chat response - Status: 200
+2025-11-04 16:02:37.852 | INFO     | main:log_requests:86 - Request completed in 12299.17ms | Status: 200
+2025-11-04 16:02:38.361 | INFO     | main:log_requests:69 - Request: POST http://localhost:8001/api/tts
+2025-11-04 16:02:38.376 | ERROR    | main:http_exception_handler:86 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-11-04 16:02:38.382 | INFO     | main:log_requests:79 - Request completed in 20.62ms | Status: 500
+2025-11-04 16:03:22.129 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-11-04 16:03:22.133 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 10
+2025-11-04 16:03:47.729 | INFO     | main:chat:213 - Chat response - Status: 200
+2025-11-04 16:03:47.731 | INFO     | main:log_requests:86 - Request completed in 25602.36ms | Status: 200
+2025-11-04 16:03:48.552 | INFO     | main:log_requests:69 - Request: POST http://localhost:8001/api/tts
+2025-11-04 16:03:48.556 | ERROR    | main:http_exception_handler:86 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-11-04 16:03:48.557 | INFO     | main:log_requests:79 - Request completed in 4.80ms | Status: 500
+2025-11-04 16:05:48.313 | INFO     | main:log_requests:76 - Request: OPTIONS http://localhost:8000/api/chat
+2025-11-04 16:05:48.315 | INFO     | main:log_requests:86 - Request completed in 2.85ms | Status: 200
+2025-11-04 16:05:48.326 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-11-04 16:05:48.330 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 12
+2025-11-04 16:06:14.804 | INFO     | main:chat:213 - Chat response - Status: 200
+2025-11-04 16:06:14.806 | INFO     | main:log_requests:86 - Request completed in 26480.50ms | Status: 200
+2025-11-04 16:06:15.650 | INFO     | main:log_requests:69 - Request: POST http://localhost:8001/api/tts
+2025-11-04 16:06:15.663 | ERROR    | main:http_exception_handler:86 - HTTP error: Failed to generate speech: expected str, bytes or os.PathLike object, not BytesIO
+2025-11-04 16:06:15.681 | INFO     | main:log_requests:79 - Request completed in 30.85ms | Status: 500
+2025-11-04 16:08:14.518 | INFO     | main:log_requests:76 - Request: POST http://localhost:8000/api/chat
+2025-11-04 16:08:14.522 | INFO     | main:chat:183 - Chat request - Model: gemma3:270m, Messages: 14
