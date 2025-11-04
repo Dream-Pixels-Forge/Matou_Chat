@@ -8,9 +8,6 @@ from fastapi import FastAPI, HTTPException, Request, status, Depends, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
 
 from config import get_settings, logger, setup_logging
 from websocket import websocket_endpoint, manager
@@ -26,10 +23,6 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting application...")
     logger.info(f"Environment: {get_settings().model_dump_json(indent=2)}")
-    
-    # Rate limiting is disabled for now
-    # app.state.limiter = Limiter(key_func=get_remote_address)
-    # app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
     
     yield  # Application runs here
     
@@ -186,18 +179,6 @@ async def chat(chat_request: ChatRequest, request: Request):
         url = f"{get_settings().OLLAMA_BASE_URL}/api/chat"
         timeout = get_settings().OLLAMA_TIMEOUT
         
-        # Rate limiting - Check if limiter is available
-        if hasattr(request.state, 'limiter') and hasattr(request.state.limiter, 'check_limit'):
-            try:
-                if not request.state.limiter.check_limit():
-                    raise HTTPException(
-                        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-                        detail="Rate limit exceeded"
-                    )
-            except Exception as e:
-                logger.warning(f"Rate limiter error: {str(e)}")
-                # Continue without rate limiting if there's an error
-        
         # Prepare request data
         request_data = chat_request.dict(exclude_none=True)
         
@@ -248,18 +229,6 @@ async def generate(chat_request: ChatRequest, request: Request):
     try:
         url = f"{get_settings().OLLAMA_BASE_URL}/api/generate"
         timeout = get_settings().OLLAMA_TIMEOUT
-        
-        # Rate limiting - Check if limiter is available
-        if hasattr(request.state, 'limiter') and hasattr(request.state.limiter, 'check_limit'):
-            try:
-                if not request.state.limiter.check_limit():
-                    raise HTTPException(
-                        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-                        detail="Rate limit exceeded"
-                    )
-            except Exception as e:
-                logger.warning(f"Rate limiter error: {str(e)}")
-                # Continue without rate limiting if there's an error
         
         # Prepare request data
         request_data = chat_request.dict(exclude_none=True)

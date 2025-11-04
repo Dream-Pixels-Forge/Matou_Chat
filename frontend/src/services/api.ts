@@ -35,10 +35,10 @@ export interface ChatResponse {
 class APIClient {
   private client: AxiosInstance;
 
-  constructor(baseURL: string = 'http://localhost:8000/api') {
+  constructor(baseURL: string = 'http://localhost:8001/api') {
     this.client = axios.create({
       baseURL,
-      timeout: 30000, // 30 seconds
+      timeout: 120000, // 2 minutes
       headers: {
         'Content-Type': 'application/json',
       },
@@ -178,6 +178,6 @@ class APIClient {
 }
 
 // Create a singleton instance
-export const api = new APIClient(import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api');
+export const api = new APIClient(import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001/api');
 
 export default api;

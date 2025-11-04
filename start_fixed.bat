@@ -48,7 +48,7 @@ if not exist "node_modules" (
 
 echo Starting backend server...
 cd /d "%BACKEND%"
-start "Matou Backend" cmd /k "python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+start "Matou Backend" cmd /k "python -m uvicorn main:app --reload --host 0.0.0.0 --port 8001"
 
 echo Waiting for backend to start...
 timeout /t 5 /nobreak >nul
@@ -67,7 +67,7 @@ echo.
 echo ==========================================
 echo Matou is starting!
 echo ==========================================
-echo Backend:  http://localhost:8000
+echo Backend:  http://localhost:8001
 echo Frontend: http://localhost:5174
 echo.
 echo Close the backend and frontend windows to stop the application.

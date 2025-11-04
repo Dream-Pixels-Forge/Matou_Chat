@@ -71,7 +71,7 @@ export const useTTS = (options: TTSServiceOptions = {}) => {
       onStart?.();
       initAudioContext();
 
-      const response = await fetch('http://localhost:8000/api/tts', {
+      const response = await fetch('http://localhost:8001/api/tts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

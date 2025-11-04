@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { 
   MantineProvider, 
-  AppShell, 
   createTheme, 
   Text, 
   TextInput, 
@@ -10,87 +9,71 @@ import {
   Container,
   Group,
   Stack,
-  Title,
   ScrollArea,
   ActionIcon,
   useMantineColorScheme,
   useComputedColorScheme,
   Box,
-  NavLink,
-  Burger,
   Menu,
-  Divider
+  Tooltip,
+  Flex,
+  Avatar,
+  Modal,
+  Slider,
+  Switch,
 } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { useSettings } from './contexts/SettingsContext';
 import { useTTS } from './hooks/useTTS';
-import { IconSend, IconVolume, IconVolumeOff } from '@tabler/icons-react';
+import { useVoiceChat } from './hooks/useVoiceChat';
+import { IconSend, IconVolume, IconMicrophone, IconMicrophoneOff, IconSun, IconMoon, IconPlus, IconChevronDown, IconDots, IconRobot, IconSettings } from '@tabler/icons-react';
 import type { Message } from './types/chat';
 import { api } from './services/api';
 
-// Custom theme configuration
 const theme = createTheme({
   fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
   colors: {
-    primary: [
-      '#e6f7ff',
-      '#bae7ff',
-      '#91d5ff',
-      '#69c0ff',
-      '#40a9ff',
-      '#1890ff',
-      '#096dd9',
-      '#0050b3',
-      '#003a8c',
-      '#002766',
+    dark: [
+      '#f8f9fa',
+      '#f1f3f4',
+      '#e9ecef',
+      '#dee2e6',
+      '#ced4da',
+      '#adb5bd',
+      '#6c757d',
+      '#495057',
+      '#343a40',
+      '#212529',
     ],
   },
-  primaryColor: 'primary',
+  primaryColor: 'dark',
   defaultRadius: 'md',
-  components: {
-    Button: {
-      defaultProps: {
-        size: 'sm',
-      },
-    },
-    Input: {
-      defaultProps: {
-        size: 'md',
-      },
-    },
-    TextInput: {
-      defaultProps: {
-        size: 'md',
-      },
-    },
-  },
 });
 
 function App() {
   const { settings, updateSettings } = useSettings();
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light');
-  const [mobileOpened, setMobileOpened] = useState(false);
   
-  // Don't render until settings are loaded
   if (!settings) {
     return (
       <MantineProvider theme={theme} defaultColorScheme={computedColorScheme}>
-        <Container size="md" h="100vh" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Loading...</Text>
-        </Container>
+        <Flex h="100vh" align="center" justify="center">
+          <Text size="lg">Loading...</Text>
+        </Flex>
       </MantineProvider>
     );
   }
   
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [settingsOpened, setSettingsOpened] = useState(false);
   const [messages, setMessages] = useLocalStorage<Message[]>({
     key: 'chat-messages',
     defaultValue: [{
       id: '1',
       role: 'assistant',
-      content: 'Hello! How can I assist you today?',
+      content: 'Hello! I\'m Matou, your AI assistant. How can I help you today?',
       timestamp: new Date().toISOString()
     }],
   });
@@ -98,19 +81,24 @@ function App() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize TTS with safe defaults
   const { speak, isSpeaking } = useTTS({
     voice: settings?.tts?.voice || 'en-US-AriaNeural',
     rate: settings?.tts?.rate || '+0%',
     volume: settings?.tts?.volume || '+0%',
   });
 
-  // Auto-scroll to bottom of messages
+  const { isListening, isSupported, startListening, stopListening } = useVoiceChat({
+    onTranscript: (text) => {
+      setInputValue(text);
+      handleSendMessage(text);
+    },
+    onError: (error) => console.error('Voice error:', error),
+  });
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Focus input on load
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
@@ -131,7 +119,6 @@ function App() {
     setIsLoading(true);
 
     try {
-      // Use backend API service
       const response = await api.chat({
         model: settings?.model || 'gemma3:1b',
         messages: updatedMessages.map(({ id, timestamp, ...rest }) => rest),
@@ -139,7 +126,6 @@ function App() {
         max_tokens: settings?.maxTokens || 2000,
       });
       
-      // Handle API response format
       let assistantContent = '';
       
       if (response.message?.content) {
@@ -149,7 +135,6 @@ function App() {
       } else if (response.response) {
         assistantContent = response.response;
       } else {
-        console.error('Unexpected API response format:', response);
         throw new Error('Received malformed response from server');
       }
 
@@ -160,19 +145,29 @@ function App() {
         timestamp: new Date().toISOString(),
       };
 
-      const finalMessages = [...updatedMessages, assistantMessage];
-      setMessages(finalMessages);
+      setMessages([...updatedMessages, assistantMessage]);
       
-      // Auto-speak assistant responses if enabled
+      // Auto-read assistant responses if enabled
       if (settings?.tts?.enabled && settings?.tts?.autoSpeak === 'assistant-only') {
-        speak(assistantMessage.content);
+        setTimeout(() => speak(assistantMessage.content), 500);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+      let errorText = 'Unknown error';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('timeout')) {
+          errorText = 'Request timed out. The model might be slow or unavailable. Try a smaller model like gemma3:270m.';
+        } else if (error.message.includes('Network Error') || error.message.includes('fetch')) {
+          errorText = 'Cannot connect to the backend. Make sure the backend server is running on port 8001.';
+        } else {
+          errorText = error.message;
+        }
+      }
+      
       const errorMessage: Message = {
         id: Date.now().toString(),
         role: 'assistant',
-        content: `Sorry, an error occurred: ${error instanceof Error ? error.message : 'Unknown error'}. Please check your connection and try again.`,
+        content: `❌ ${errorText}`,
         timestamp: new Date().toISOString(),
         error: true,
       };
@@ -187,189 +182,364 @@ function App() {
     handleSendMessage(inputValue);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage(inputValue);
-    }
-  };
+  const isDark = computedColorScheme === 'dark';
 
   return (
     <MantineProvider theme={theme} defaultColorScheme={computedColorScheme}>
-      <AppShell
-        header={{ height: 60 }}
-        navbar={{
-          width: 300,
-          breakpoint: 'sm',
-          collapsed: { mobile: !mobileOpened },
-        }}
-        padding="md"
-        withBorder={false}
-      >
-        <AppShell.Header p="md">
-          <Group justify="space-between" align="center" h="100%">
-            <Group>
-              <Burger
-                opened={mobileOpened}
-                onClick={() => setMobileOpened((o) => !o)}
-                hiddenFrom="sm"
-                size="sm"
-                mr="xl"
-              />
-              <Title order={3}>Ollama Chat</Title>
-            </Group>
-            <Group>
-              <ActionIcon 
-                variant="light" 
-                onClick={() => setColorScheme(computedColorScheme === 'dark' ? 'light' : 'dark')}
-                aria-label="Toggle color scheme"
-              >
-                {computedColorScheme === 'dark' ? '🌞' : '🌙'}
-              </ActionIcon>
-            </Group>
-          </Group>
-        </AppShell.Header>
-
-        <AppShell.Navbar p="md" withBorder={false}>
-          <AppShell.Section grow>
-            <Stack gap="xs">
-              <Text fw={500} size="sm" c="dimmed">Models</Text>
-              <Menu shadow="md" width={200}>
-                <Menu.Target>
-                  <Button variant="light" fullWidth>
-                    {settings?.model || 'Loading...'}
-                  </Button>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  {[
-                    'taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest',
-                    'deepseek-r1:1.5b',
-                    'gemma3:1b',
-                    'gemma3:270m'
-                  ].map((model) => (
-                    <Menu.Item 
-                      key={model} 
-                      onClick={() => updateSettings({ model })}
-                      bg={settings?.model === model ? 'var(--mantine-color-blue-light)' : undefined}
-                    >
-                      {model}
-                    </Menu.Item>
-                  ))}
-                </Menu.Dropdown>
-              </Menu>
-              
-              <Divider my="sm" />
-              
-              <Text fw={500} size="sm" c="dimmed" mt="md">Chat History</Text>
-              <NavLink
-                label="New Chat"
+      <Flex h="100vh">
+        {/* Sidebar */}
+        <Box 
+          w={60}
+          style={{ 
+            backgroundColor: isDark ? '#171717' : '#f8f9fa',
+            borderRight: `1px solid ${isDark ? '#404040' : '#e5e5e5'}`,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Stack gap="xs" p="sm" style={{ flex: 1 }}>
+            <Tooltip label="New chat" position="right">
+              <ActionIcon
+                size="xl"
+                variant="subtle"
                 onClick={() => setMessages([{
                   id: '1',
                   role: 'assistant',
-                  content: 'Hello! How can I assist you today?',
+                  content: 'Hello! I\'m Matou, your AI assistant. How can I help you today?',
                   timestamp: new Date().toISOString()
                 }])}
-                active
-              />
-              <NavLink
-                label="Previous Chat"
-                disabled
-                description="Coming soon"
-              />
-            </Stack>
-          </AppShell.Section>
-          
-          <AppShell.Section>
-            <Divider my="sm" />
-            <Group justify="space-between" p="sm">
-              <Text size="sm" c="dimmed">Settings</Text>
-              <ActionIcon variant="subtle" size="sm">
-                ⚙️
+              >
+                <IconPlus size={20} />
               </ActionIcon>
-            </Group>
-          </AppShell.Section>
-        </AppShell.Navbar>
-        
-        <AppShell.Main>
-          <Container size="md" h="calc(100vh - 200px)" p={0} pl={{ base: 0, sm: '300px' }}>
-            <ScrollArea h="100%" p="md">
-              <Stack gap="md" pb="xl">
-                {messages.map((message) => (
-                  <Paper 
-                    key={message.id}
-                    p="md"
-                    shadow="xs"
-                    withBorder
-                    bg={message.role === 'assistant' ? 
-                      (computedColorScheme === 'dark' ? 'dark.6' : 'gray.0') : 
-                      'transparent'}
-                  >
-                    <Group justify="space-between" mb="xs">
-                      <Text fw={500} c={message.role === 'assistant' ? 'blue' : 'green'}>
-                        {message.role === 'assistant' ? 'Assistant' : 'You'}
-                      </Text>
-                      {message.role === 'assistant' && settings?.tts?.enabled && (
-                        <ActionIcon 
-                          variant="subtle" 
-                          size="sm"
-                          onClick={() => speak(message.content)}
-                          disabled={isSpeaking}
-                          aria-label={isSpeaking ? 'Speaking...' : 'Speak message'}
-                        >
-                          {isSpeaking ? <IconVolumeOff size={18} /> : <IconVolume size={18} />}
-                        </ActionIcon>
-                      )}
-                    </Group>
-                    <Text style={{ whiteSpace: 'pre-line' }}>{message.content}</Text>
-                  </Paper>
-                ))}
-                <div ref={messagesEndRef} />
-              </Stack>
-            </ScrollArea>
-          </Container>
+            </Tooltip>
 
-          <Box 
-            style={{
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              padding: '1rem',
-              backgroundColor: 'var(--mantine-color-body)',
-              borderTop: '1px solid var(--mantine-color-gray-3)'
-            }}
-            pl={{ base: 0, sm: '300px' }}
-            pr="md"
-            pb={{ base: 'env(safe-area-inset-bottom, 1rem)', sm: '1rem' }}
-          >
-            <Container size="md" p={0}>
-              <form onSubmit={handleSubmit}>
-                <Group gap="sm" wrap="nowrap">
-                  <TextInput
-                    ref={inputRef}
-                    placeholder="Type your message..."
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.currentTarget.value)}
-                    onKeyDown={handleKeyDown}
-                    disabled={isLoading}
-                    style={{ flex: 1 }}
-                    radius="md"
-                    autoComplete="off"
-                  />
-                  <Button 
-                    type="submit" 
-                    loading={isLoading}
-                    leftSection={!isLoading && <IconSend size={18} />}
-                    radius="md"
+            <Menu shadow="md" width={200} position="right-start">
+              <Menu.Target>
+                <Tooltip label="Select model" position="right">
+                  <ActionIcon size="xl" variant="subtle">
+                    <IconRobot size={20} />
+                  </ActionIcon>
+                </Tooltip>
+              </Menu.Target>
+              <Menu.Dropdown>
+                {[
+                  'taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest',
+                  'deepseek-r1:1.5b',
+                  'gemma3:1b',
+                  'gemma3:270m'
+                ].map((model) => (
+                  <Menu.Item 
+                    key={model} 
+                    onClick={() => updateSettings({ model })}
                   >
-                    {isLoading ? 'Sending...' : 'Send'}
-                  </Button>
-                </Group>
-              </form>
+                    <Text size="sm">
+                      {model.split(':')[0].split('/').pop()?.replace(/[^a-zA-Z0-9]/g, ' ')}
+                    </Text>
+                  </Menu.Item>
+                ))}
+              </Menu.Dropdown>
+            </Menu>
+
+
+          </Stack>
+
+          <Stack gap="xs" p="sm">
+            <Tooltip label="Settings" position="right">
+              <ActionIcon size="xl" variant="subtle" onClick={() => setSettingsOpened(true)}>
+                <IconSettings size={20} />
+              </ActionIcon>
+            </Tooltip>
+
+            <Tooltip label={`Switch to ${isDark ? 'light' : 'dark'} mode`} position="right">
+              <ActionIcon 
+                size="xl" 
+                variant="subtle"
+                onClick={() => setColorScheme(isDark ? 'light' : 'dark')}
+              >
+                {isDark ? <IconSun size={20} /> : <IconMoon size={20} />}
+              </ActionIcon>
+            </Tooltip>
+          </Stack>
+        </Box>
+
+        {/* Main Content */}
+        <Box style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          {/* Header */}
+          <Box 
+            px="lg" 
+            py="md"
+            style={{ 
+              borderBottom: `1px solid ${isDark ? '#404040' : '#e5e5e5'}`,
+              backgroundColor: isDark ? '#212121' : '#ffffff',
+            }}
+          >
+            <Group justify="space-between" align="center">
+              <Box />
+              <Text size="lg" fw={700} c={isDark ? '#ffffff' : '#000000'}>
+                Matou
+              </Text>
+              <Text size="sm" c={isDark ? '#a0a0a0' : '#666666'} fw={500}>
+                {settings?.model?.split(':')[0]?.split('/').pop()?.replace(/[^a-zA-Z0-9]/g, ' ') || 'Loading...'}
+              </Text>
+            </Group>
+          </Box>
+
+          {/* Chat Area */}
+          <Box style={{ flex: 1, overflow: 'hidden', backgroundColor: isDark ? '#212121' : '#ffffff' }}>
+            <ScrollArea h="100%">
+              <Container size="md" py="xl">
+                <Stack gap="xl">
+                  {messages.map((message) => (
+                    <Group 
+                      key={message.id}
+                      align="flex-start"
+                      gap="md"
+                      wrap="nowrap"
+                    >
+                      <Avatar 
+                        size={32}
+                        radius="sm"
+                        color={message.role === 'assistant' ? 'blue' : 'gray'}
+                        style={{ flexShrink: 0 }}
+                      >
+                        {message.role === 'assistant' ? 'M' : 'U'}
+                      </Avatar>
+                      
+                      <Box style={{ flex: 1, minWidth: 0 }}>
+                        <Group justify="space-between" mb="xs">
+                          <Text size="sm" fw={600} c={isDark ? '#e5e5e5' : '#374151'}>
+                            {message.role === 'assistant' ? 'Matou' : 'You'}
+                          </Text>
+                          <Group gap="xs">
+                            {message.role === 'assistant' && (
+                              <>
+                                <Tooltip label="Read aloud">
+                                  <ActionIcon 
+                                    variant="subtle" 
+                                    size="sm"
+                                    onClick={() => speak(message.content)}
+                                    disabled={isSpeaking}
+                                  >
+                                    <IconVolume size={16} />
+                                  </ActionIcon>
+                                </Tooltip>
+                                <Menu shadow="md" width={200}>
+                                  <Menu.Target>
+                                    <ActionIcon variant="subtle" size="sm">
+                                      <IconDots size={16} />
+                                    </ActionIcon>
+                                  </Menu.Target>
+                                  <Menu.Dropdown>
+                                    <Menu.Item onClick={() => navigator.clipboard.writeText(message.content)}>
+                                      Copy message
+                                    </Menu.Item>
+                                    <Menu.Item onClick={() => speak(message.content)} disabled={isSpeaking}>
+                                      Read aloud
+                                    </Menu.Item>
+                                    <Menu.Item color="red">
+                                      Report issue
+                                    </Menu.Item>
+                                  </Menu.Dropdown>
+                                </Menu>
+                              </>
+                            )}
+                          </Group>
+                        </Group>
+                        <Text 
+                          style={{ 
+                            whiteSpace: 'pre-line', 
+                            lineHeight: 1.6,
+                            color: isDark ? '#e5e5e5' : '#374151',
+                          }}
+                        >
+                          {message.content}
+                        </Text>
+                      </Box>
+                    </Group>
+                  ))}
+                  
+                  {isLoading && (
+                    <Group align="flex-start" gap="md" wrap="nowrap">
+                      <Avatar size={32} radius="sm" color="blue">M</Avatar>
+                      <Box>
+                        <Text size="sm" fw={600} c={isDark ? '#e5e5e5' : '#374151'} mb="xs">
+                          Matou
+                        </Text>
+                        <Box 
+                          style={{
+                            display: 'flex',
+                            gap: '4px',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {[0, 1, 2].map((i) => (
+                            <Box
+                              key={i}
+                              w={8}
+                              h={8}
+                              style={{
+                                backgroundColor: isDark ? '#666' : '#ccc',
+                                borderRadius: '50%',
+                                animation: `pulse 1.4s ease-in-out ${i * 0.2}s infinite`,
+                              }}
+                            />
+                          ))}
+                        </Box>
+                      </Box>
+                    </Group>
+                  )}
+                  
+                  <div ref={messagesEndRef} />
+                </Stack>
+              </Container>
+            </ScrollArea>
+          </Box>
+
+          {/* Input Area */}
+          <Box 
+            p="lg"
+            style={{ 
+              borderTop: `1px solid ${isDark ? '#404040' : '#e5e5e5'}`,
+              backgroundColor: isDark ? '#212121' : '#ffffff',
+            }}
+          >
+            <Container size="md">
+              <Paper
+                p="md"
+                radius="xl"
+                style={{
+                  border: `2px solid ${isDark ? '#404040' : '#e5e5e5'}`,
+                  backgroundColor: isDark ? '#2f2f2f' : '#ffffff',
+                }}
+              >
+                <form onSubmit={handleSubmit}>
+                  <Group gap="md" wrap="nowrap">
+                    <TextInput
+                      ref={inputRef}
+                      placeholder={isListening ? "Listening..." : "Message Matou..."}
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.currentTarget.value)}
+                      disabled={isLoading || isListening}
+                      style={{ flex: 1 }}
+                      variant="unstyled"
+                      size="md"
+                      styles={{
+                        input: {
+                          border: 'none',
+                          background: 'transparent',
+                          fontSize: '16px',
+                          color: isDark ? '#e5e5e5' : '#374151',
+                        }
+                      }}
+                    />
+                    
+                    {isSupported && (
+                      <Tooltip label={isListening ? "Stop listening" : "Voice input"}>
+                        <ActionIcon
+                          size="lg"
+                          radius="md"
+                          variant={isListening ? "filled" : "subtle"}
+                          color={isListening ? "red" : "gray"}
+                          onClick={() => isListening ? stopListening() : startListening()}
+                        >
+                          {isListening ? <IconMicrophoneOff size={18} /> : <IconMicrophone size={18} />}
+                        </ActionIcon>
+                      </Tooltip>
+                    )}
+                    
+                    <ActionIcon 
+                      type="submit" 
+                      size="lg"
+                      radius="md"
+                      variant="filled"
+                      color="dark"
+                      disabled={!inputValue.trim() || isLoading || isListening}
+                      loading={isLoading}
+                    >
+                      <IconSend size={18} />
+                    </ActionIcon>
+                  </Group>
+                </form>
+              </Paper>
             </Container>
           </Box>
-        </AppShell.Main>
-      </AppShell>
+        </Box>
+      </Flex>
+      
+      <Modal opened={settingsOpened} onClose={() => setSettingsOpened(false)} title="Settings" size="md">
+        <Stack gap="lg">
+          <Box>
+            <Text size="sm" fw={500} mb="xs">Temperature</Text>
+            <Slider
+              value={settings?.temperature || 0.7}
+              onChange={(value) => updateSettings({ temperature: value })}
+              min={0}
+              max={2}
+              step={0.1}
+              marks={[
+                { value: 0, label: '0' },
+                { value: 1, label: '1' },
+                { value: 2, label: '2' },
+              ]}
+            />
+          </Box>
+          
+          <Box>
+            <Text size="sm" fw={500} mb="xs">Max Tokens</Text>
+            <Slider
+              value={settings?.maxTokens || 2000}
+              onChange={(value) => updateSettings({ maxTokens: value })}
+              min={100}
+              max={4000}
+              step={100}
+              marks={[
+                { value: 100, label: '100' },
+                { value: 2000, label: '2K' },
+                { value: 4000, label: '4K' },
+              ]}
+            />
+          </Box>
+          
+          <Box>
+            <Group justify="space-between">
+              <Text size="sm" fw={500}>Text-to-Speech</Text>
+              <Switch
+                checked={settings?.tts?.enabled || false}
+                onChange={(event) => updateSettings({ 
+                  tts: { ...settings?.tts, enabled: event.currentTarget.checked } 
+                })}
+              />
+            </Group>
+          </Box>
+          
+          <Box>
+            <Group justify="space-between">
+              <Text size="sm" fw={500}>Auto-read responses</Text>
+              <Switch
+                checked={settings?.tts?.autoSpeak === 'assistant-only'}
+                onChange={(event) => updateSettings({ 
+                  tts: { 
+                    ...settings?.tts, 
+                    autoSpeak: event.currentTarget.checked ? 'assistant-only' : 'off' 
+                  } 
+                })}
+                disabled={!settings?.tts?.enabled}
+              />
+            </Group>
+          </Box>
+          
+          <Button onClick={() => setSettingsOpened(false)} fullWidth>
+            Close
+          </Button>
+        </Stack>
+      </Modal>
+      
+      <style>{`
+        @keyframes pulse {
+          0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+          40% { transform: scale(1); opacity: 1; }
+        }
+      `}</style>
     </MantineProvider>
   );
 }
