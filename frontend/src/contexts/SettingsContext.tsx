@@ -28,6 +28,7 @@ export interface Settings {
   autoScroll: boolean;
   showTimestamps: boolean;
   markdown: boolean;
+  systemPrompt: string;
   
   // TTS settings
   tts: TTSSettings;
@@ -45,7 +46,7 @@ interface SettingsContextType {
 
 const defaultSettings: Settings = {
   // Model defaults
-  model: 'taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest',
+  model: 'gemma3:270m',
   temperature: 0.3,
   maxTokens: 2000,
   topP: 0.9,
@@ -61,6 +62,7 @@ const defaultSettings: Settings = {
   autoScroll: true,
   showTimestamps: true,
   markdown: true,
+  systemPrompt: 'You are a helpful AI assistant.',
   
   // TTS defaults
   tts: {

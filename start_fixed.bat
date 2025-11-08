@@ -71,6 +71,23 @@ echo Backend:  http://localhost:8001
 echo Frontend: http://localhost:5174
 echo.
 echo Close the backend and frontend windows to stop the application.
+echo Or run 'stop_matou.bat' to stop all services at once.
 echo ==========================================
 
+:: Handle Ctrl+C to cleanup
+setlocal EnableDelayedExpansion
+set "cleanup=false"
+
+:wait_loop
+ping 127.0.0.1 -n 2 >nul
+if !cleanup!==true goto :cleanup
+goto :wait_loop
+
+:cleanup
+echo.
+echo Cleaning up processes...
+taskkill /F /IM python.exe /T >nul 2>&1
+taskkill /F /IM node.exe /T >nul 2>&1
+echo Cleanup complete.
 pause
+exit

@@ -19,57 +19,44 @@ export const useTTS = (options: TTSServiceOptions = {}) => {
     onError,
   } = options;
 
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const audioQueueRef = useRef<ArrayBuffer[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  const initAudioContext = useCallback(() => {
-    if (typeof window !== 'undefined' && !audioContextRef.current) {
-      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-      audioContextRef.current = new AudioContext();
-    }
-  }, []);
-
-  const processAudioQueue = useCallback(async () => {
-    if (isSpeaking || audioQueueRef.current.length === 0 || !audioContextRef.current) {
-      return;
-    }
-
-    setIsSpeaking(true);
-    const audioData = audioQueueRef.current.shift();
-
-    if (!audioData) {
-      setIsSpeaking(false);
-      return;
-    }
-
-    try {
-      const audioBuffer = await audioContextRef.current.decodeAudioData(audioData);
-      const source = audioContextRef.current.createBufferSource();
-      source.buffer = audioBuffer;
-      source.connect(audioContextRef.current.destination);
-      
-      source.onended = () => {
+  const speakWithWebAPI = useCallback((text: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.onstart = () => {
+        setIsSpeaking(true);
+        onStart?.();
+      };
+      utterance.onend = () => {
         setIsSpeaking(false);
-        processAudioQueue();
         onEnd?.();
       };
-
-      source.start();
-    } catch (error) {
-      console.error('Error playing audio:', error);
-      onError?.(error instanceof Error ? error.message : 'Failed to play audio');
-      setIsSpeaking(false);
-      processAudioQueue();
+      utterance.onerror = () => {
+        setIsSpeaking(false);
+        onError?.('Speech synthesis failed');
+      };
+      window.speechSynthesis.speak(utterance);
+      return true;
     }
-  }, [onEnd, onError, isSpeaking]);
+    return false;
+  }, [onStart, onEnd, onError]);
 
   const speak = useCallback(async (text: string) => {
     if (!text.trim()) return;
 
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+
     try {
       onStart?.();
-      initAudioContext();
+      setIsSpeaking(true);
 
       const response = await fetch('http://localhost:8001/api/tts', {
         method: 'POST',
@@ -88,23 +75,48 @@ export const useTTS = (options: TTSServiceOptions = {}) => {
         throw new Error(`TTS request failed with status ${response.status}`);
       }
 
-      const audioData = await response.arrayBuffer();
-      audioQueueRef.current.push(audioData);
-      processAudioQueue();
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      
+      currentAudioRef.current = audio;
+      
+      audio.onended = () => {
+        setIsSpeaking(false);
+        URL.revokeObjectURL(audioUrl);
+        currentAudioRef.current = null;
+        onEnd?.();
+      };
+      
+      audio.onerror = () => {
+        setIsSpeaking(false);
+        URL.revokeObjectURL(audioUrl);
+        currentAudioRef.current = null;
+        if (!speakWithWebAPI(text)) {
+          onError?.('Audio playback failed');
+        }
+      };
+      
+      await audio.play();
+      
     } catch (error) {
-      console.error('Error in TTS:', error);
-      onError?.(error instanceof Error ? error.message : 'Failed to convert text to speech');
+      setIsSpeaking(false);
+      if (!speakWithWebAPI(text)) {
+        onError?.(error instanceof Error ? error.message : 'TTS failed');
+      }
     }
-  }, [initAudioContext, onStart, onError, processAudioQueue, voice, rate, volume]);
+  }, [onStart, onEnd, onError, speakWithWebAPI, voice, rate, volume]);
 
   return {
     speak,
     stop: () => {
-      // Stop currently playing audio and clear the queue
-      if (audioContextRef.current?.state === 'running') {
-        audioContextRef.current.suspend();
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
       }
-      audioQueueRef.current = [];
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
       setIsSpeaking(false);
     },
     isSpeaking,

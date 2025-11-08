@@ -20,6 +20,8 @@ async def text_to_speech(request: TTSRequest):
     Convert text to speech using edge-tts
     """
     try:
+        print(f"TTS Request: {request.text[:50]}... with voice {request.voice}")
+        
         communicate = edge_tts.Communicate(
             text=request.text,
             voice=request.voice,
@@ -34,6 +36,8 @@ async def text_to_speech(request: TTSRequest):
         await communicate.save(audio_buffer)
         audio_buffer.seek(0)
         
+        print(f"TTS Success: Generated {len(audio_buffer.getvalue())} bytes")
+        
         # Return the audio data as a streaming response
         return StreamingResponse(
             iter([audio_buffer.getvalue()]),
@@ -41,6 +45,9 @@ async def text_to_speech(request: TTSRequest):
         )
         
     except Exception as e:
+        print(f"TTS Error: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(
             status_code=500,
             detail=f"Failed to generate speech: {str(e)}"

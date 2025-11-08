@@ -21,12 +21,15 @@ import {
   Modal,
   Slider,
   Switch,
+  List,
+  Textarea,
+  Select,
 } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { useSettings } from './contexts/SettingsContext';
 import { useTTS } from './hooks/useTTS';
 import { useVoiceChat } from './hooks/useVoiceChat';
-import { IconSend, IconVolume, IconMicrophone, IconMicrophoneOff, IconSun, IconMoon, IconPlus, IconChevronDown, IconDots, IconRobot, IconSettings } from '@tabler/icons-react';
+import { IconSend, IconVolume, IconMicrophone, IconMicrophoneOff, IconSun, IconMoon, IconPlus, IconChevronDown, IconDots, IconSettings, IconX, IconCopy, IconCheck, IconRefresh, IconDownload, IconSearch, IconThumbUp, IconThumbDown, IconClock, IconKeyboard } from '@tabler/icons-react';
 import type { Message } from './types/chat';
 import { api } from './services/api';
 
@@ -50,32 +53,50 @@ const theme = createTheme({
   defaultRadius: 'md',
 });
 
+const systemPrompts = {
+  default: 'You are a helpful AI assistant.',
+  junior_dev: 'You are a senior software engineer mentoring a junior developer. Explain concepts clearly with practical examples, suggest best practices, help debug code step-by-step, and encourage learning. Always include code examples and explain the reasoning behind solutions.',
+  learner: 'You are a patient and encouraging tutor. Break down complex topics into simple, digestible parts. Use analogies and real-world examples. Ask clarifying questions to ensure understanding. Provide step-by-step explanations and suggest additional resources for deeper learning.',
+  musician: 'You are an experienced music producer and composer. Help with music theory, composition techniques, production tips, instrument advice, and creative inspiration. Explain concepts in both technical and practical terms. Suggest exercises and provide feedback on musical ideas.',
+  artist_3d: 'You are a professional 3D artist and technical director. Assist with modeling, texturing, lighting, animation, and rendering techniques. Provide workflow optimization tips, software-specific guidance (Blender, Maya, etc.), and creative problem-solving for 3D projects.',
+  filmmaker: 'You are an experienced film director and cinematographer. Help with storytelling, shot composition, lighting techniques, editing workflows, and production planning. Provide creative feedback, technical solutions, and industry insights for film projects.',
+  custom: ''
+};
+
 function App() {
+  // All hooks must be at the top
   const { settings, updateSettings } = useSettings();
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light');
   
-  if (!settings) {
-    return (
-      <MantineProvider theme={theme} defaultColorScheme={computedColorScheme}>
-        <Flex h="100vh" align="center" justify="center">
-          <Text size="lg">Loading...</Text>
-        </Flex>
-      </MantineProvider>
-    );
-  }
-  
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [settingsOpened, setSettingsOpened] = useState(false);
-  const [messages, setMessages] = useLocalStorage<Message[]>({
-    key: 'chat-messages',
-    defaultValue: [{
-      id: '1',
-      role: 'assistant',
-      content: 'Hello! I\'m Matou, your AI assistant. How can I help you today?',
-      timestamp: new Date().toISOString()
-    }],
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showTimestamps, setShowTimestamps] = useState(false);
+  const [helpOpened, setHelpOpened] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [currentChatId, setCurrentChatId] = useLocalStorage<string>({
+    key: 'current-chat-id',
+    defaultValue: 'chat-1',
+  });
+  const [chatHistory, setChatHistory] = useLocalStorage<Record<string, {id: string, title: string, messages: Message[], timestamp: string}>>({
+    key: 'chat-history',
+    defaultValue: {
+      'chat-1': {
+        id: 'chat-1',
+        title: 'New Chat',
+        messages: [{
+          id: '1',
+          role: 'assistant',
+          content: 'Hello! I\'m Matou, your AI assistant. How can I help you today?',
+          timestamp: new Date().toISOString()
+        }],
+        timestamp: new Date().toISOString()
+      }
+    },
   });
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -90,10 +111,46 @@ function App() {
   const { isListening, isSupported, startListening, stopListening } = useVoiceChat({
     onTranscript: (text) => {
       setInputValue(text);
-      handleSendMessage(text);
     },
-    onError: (error) => console.error('Voice error:', error),
+    onError: (error) => {
+      if (error !== 'Network error') {
+        console.error('Voice error:', error);
+      }
+    },
   });
+
+  // Early return after all hooks
+  if (!settings) {
+    return (
+      <MantineProvider theme={theme} defaultColorScheme={computedColorScheme}>
+        <Flex h="100vh" align="center" justify="center">
+          <Text size="lg">Loading...</Text>
+        </Flex>
+      </MantineProvider>
+    );
+  }
+
+  const messages = chatHistory[currentChatId]?.messages || [];
+  const setMessages = (newMessages: Message[] | ((prev: Message[]) => Message[])) => {
+    const updatedMessages = typeof newMessages === 'function' ? newMessages(messages) : newMessages;
+    setChatHistory(prev => ({
+      ...prev,
+      [currentChatId]: {
+        ...prev[currentChatId],
+        messages: updatedMessages,
+        title: updatedMessages.length > 1 ? updatedMessages[1]?.content?.slice(0, 30) + '...' : 'New Chat'
+      }
+    }));
+  };
+
+  const isDark = computedColorScheme === 'dark';
+  
+  const getModelSpeed = (modelName: string) => {
+    if (modelName?.includes('270m')) return '⚡';
+    if (modelName?.includes('gemma3:1b')) return '🚀';
+    if (modelName?.includes('deepseek-r1:1.5b')) return '⏱️';
+    return '🐌';
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -101,7 +158,63 @@ function App() {
 
   useEffect(() => {
     inputRef.current?.focus();
-  }, []);
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        switch (e.key) {
+          case 'n':
+            e.preventDefault();
+            const newChatId = `chat-${Date.now()}`;
+            const newChat = {
+              id: newChatId,
+              title: 'New Chat',
+              messages: [{
+                id: '1',
+                role: 'assistant',
+                content: 'Hello! I\'m Matou, your AI assistant. How can I help you today?',
+                timestamp: new Date().toISOString()
+              }],
+              timestamp: new Date().toISOString()
+            };
+            setChatHistory(prev => ({ ...prev, [newChatId]: newChat }));
+            setCurrentChatId(newChatId);
+            break;
+          case ',':
+            e.preventDefault();
+            setSettingsOpened(true);
+            break;
+          case 'k':
+            e.preventDefault();
+            setSearchQuery('');
+            break;
+        }
+      } else if (e.key === '?' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        setHelpOpened(true);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [setChatHistory, setCurrentChatId, setSettingsOpened]);
+
+  // Auto-save draft
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (inputValue.trim()) {
+        localStorage.setItem(`draft-${currentChatId}`, inputValue);
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [inputValue, currentChatId]);
+
+  // Load draft on chat change
+  useEffect(() => {
+    const draft = localStorage.getItem(`draft-${currentChatId}`);
+    if (draft && !inputValue) {
+      setInputValue(draft);
+    }
+  }, [currentChatId]);
 
   const handleSendMessage = async (content: string) => {
     if (!content.trim() || isLoading) return;
@@ -117,11 +230,16 @@ function App() {
     setMessages(updatedMessages);
     setInputValue('');
     setIsLoading(true);
+    setIsTyping(true);
+    
+    // Clear draft
+    localStorage.removeItem(`draft-${currentChatId}`);
 
     try {
+      const systemMessage = settings?.systemPrompt ? [{ role: 'system', content: settings.systemPrompt }] : [];
       const response = await api.chat({
-        model: settings?.model || 'gemma3:1b',
-        messages: updatedMessages.map(({ id, timestamp, ...rest }) => rest),
+        model: settings?.model || 'gemma3:270m',
+        messages: [...systemMessage, ...updatedMessages.map(({ id, timestamp, ...rest }) => rest)],
         temperature: settings?.temperature || 0.7,
         max_tokens: settings?.maxTokens || 2000,
       });
@@ -134,8 +252,11 @@ function App() {
         assistantContent = response.choices[0].message.content;
       } else if (response.response) {
         assistantContent = response.response;
+      } else if (typeof response === 'string') {
+        assistantContent = response;
       } else {
-        throw new Error('Received malformed response from server');
+        console.log('Unexpected response format:', response);
+        assistantContent = JSON.stringify(response);
       }
 
       const assistantMessage: Message = {
@@ -146,11 +267,12 @@ function App() {
       };
 
       setMessages([...updatedMessages, assistantMessage]);
+      setIsTyping(false);
       
-      // Auto-read assistant responses if enabled
-      if (settings?.tts?.enabled && settings?.tts?.autoSpeak === 'assistant-only') {
-        setTimeout(() => speak(assistantMessage.content), 500);
-      }
+      // Auto-TTS disabled due to backend issues
+      // if (settings?.tts?.enabled && settings?.tts?.autoSpeak === 'assistant-only') {
+      //   setTimeout(() => speak(assistantMessage.content), 500);
+      // }
     } catch (error) {
       let errorText = 'Unknown error';
       
@@ -171,9 +293,11 @@ function App() {
         timestamp: new Date().toISOString(),
         error: true,
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages([...updatedMessages, errorMessage]);
+      setIsTyping(false);
     } finally {
       setIsLoading(false);
+      setIsTyping(false);
     }
   };
 
@@ -182,89 +306,168 @@ function App() {
     handleSendMessage(inputValue);
   };
 
-  const isDark = computedColorScheme === 'dark';
+  const regenerateMessage = async (messageIndex: number) => {
+    const messagesToRegenerate = messages.slice(0, messageIndex);
+    const lastUserMessage = messagesToRegenerate[messagesToRegenerate.length - 1];
+    if (lastUserMessage?.role === 'user') {
+      setMessages(messagesToRegenerate);
+      await handleSendMessage(lastUserMessage.content);
+    }
+  };
+
+  const exportChat = () => {
+    const chatData = {
+      title: chatHistory[currentChatId]?.title || 'Chat Export',
+      messages: messages,
+      timestamp: new Date().toISOString()
+    };
+    const blob = new Blob([JSON.stringify(chatData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${chatData.title.replace(/[^a-z0-9]/gi, '_')}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const filteredChats = Object.values(chatHistory).filter(chat => 
+    searchQuery ? chat.title.toLowerCase().includes(searchQuery.toLowerCase()) : true
+  );
 
   return (
     <MantineProvider theme={theme} defaultColorScheme={computedColorScheme}>
       <Flex h="100vh">
-        {/* Sidebar */}
         <Box 
-          w={60}
+          w={sidebarCollapsed ? 0 : 260}
           style={{ 
             backgroundColor: isDark ? '#171717' : '#f8f9fa',
-            borderRight: `1px solid ${isDark ? '#404040' : '#e5e5e5'}`,
+            borderRight: sidebarCollapsed ? 'none' : `1px solid ${isDark ? '#404040' : '#e5e5e5'}`,
             display: 'flex',
             flexDirection: 'column',
+            transition: 'width 0.2s ease',
+            overflow: 'hidden',
           }}
         >
-          <Stack gap="xs" p="sm" style={{ flex: 1 }}>
-            <Tooltip label="New chat" position="right">
-              <ActionIcon
-                size="xl"
-                variant="subtle"
-                onClick={() => setMessages([{
-                  id: '1',
-                  role: 'assistant',
-                  content: 'Hello! I\'m Matou, your AI assistant. How can I help you today?',
+          <Box p="lg" style={{ borderBottom: `1px solid ${isDark ? '#404040' : '#e5e5e5'}` }}>
+            <Text size="xl" fw={700} c={isDark ? '#ffffff' : '#000000'} ta="center">
+              Matou Chat
+            </Text>
+          </Box>
+          
+          <Stack gap="md" p="lg" style={{ flex: 1 }}>
+            <Button
+              fullWidth
+              leftSection={<IconPlus size={16} />}
+              variant="light"
+              justify="flex-start"
+              onClick={() => {
+                const newChatId = `chat-${Date.now()}`;
+                const newChat = {
+                  id: newChatId,
+                  title: 'New Chat',
+                  messages: [{
+                    id: '1',
+                    role: 'assistant',
+                    content: 'Hello! I\'m Matou, your AI assistant. How can I help you today?',
+                    timestamp: new Date().toISOString()
+                  }],
                   timestamp: new Date().toISOString()
-                }])}
-              >
-                <IconPlus size={20} />
-              </ActionIcon>
-            </Tooltip>
-
-            <Menu shadow="md" width={200} position="right-start">
-              <Menu.Target>
-                <Tooltip label="Select model" position="right">
-                  <ActionIcon size="xl" variant="subtle">
-                    <IconRobot size={20} />
-                  </ActionIcon>
-                </Tooltip>
-              </Menu.Target>
-              <Menu.Dropdown>
-                {[
-                  'taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025:latest',
-                  'deepseek-r1:1.5b',
-                  'gemma3:1b',
-                  'gemma3:270m'
-                ].map((model) => (
-                  <Menu.Item 
-                    key={model} 
-                    onClick={() => updateSettings({ model })}
+                };
+                setChatHistory(prev => ({ ...prev, [newChatId]: newChat }));
+                setCurrentChatId(newChatId);
+              }}
+            >
+              New Chat
+            </Button>
+            
+            <Stack gap="xs" mt="md">
+              <Group justify="space-between" align="center">
+                <Text size="sm" fw={600} c="dimmed" pl="xs">Recent Chats</Text>
+                <ActionIcon size="sm" variant="subtle" onClick={() => setShowTimestamps(!showTimestamps)}>
+                  <IconClock size={14} />
+                </ActionIcon>
+              </Group>
+              
+              <TextInput
+                placeholder="Search chats..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.currentTarget.value)}
+                size="xs"
+                leftSection={<IconSearch size={14} />}
+                variant="filled"
+              />
+              
+              {filteredChats.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).slice(0, 10).map((chat) => (
+                <Group key={chat.id} gap={0} style={{ position: 'relative' }}>
+                  <Button
+                    variant={currentChatId === chat.id ? 'light' : 'subtle'}
+                    justify="flex-start"
+                    onClick={() => setCurrentChatId(chat.id)}
+                    style={{ flex: 1, paddingRight: '30px' }}
                   >
-                    <Text size="sm">
-                      {model.split(':')[0].split('/').pop()?.replace(/[^a-zA-Z0-9]/g, ' ')}
-                    </Text>
-                  </Menu.Item>
-                ))}
-              </Menu.Dropdown>
-            </Menu>
-
-
+                    <Box style={{ flex: 1 }}>
+                      <Text size="sm" truncate style={{ textAlign: 'left', width: '100%' }}>
+                        {chat.title}
+                      </Text>
+                      {showTimestamps && (
+                        <Text size="xs" c="dimmed" truncate>
+                          {new Date(chat.timestamp).toLocaleDateString()}
+                        </Text>
+                      )}
+                    </Box>
+                  </Button>
+                  {Object.keys(chatHistory).length > 1 && (
+                    <ActionIcon
+                      size="sm"
+                      variant="subtle"
+                      color="red"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const { [chat.id]: deleted, ...remaining } = chatHistory;
+                        setChatHistory(remaining);
+                        if (currentChatId === chat.id) {
+                          const remainingIds = Object.keys(remaining);
+                          setCurrentChatId(remainingIds[0] || 'chat-1');
+                        }
+                      }}
+                      style={{ 
+                        position: 'absolute', 
+                        right: '4px', 
+                        top: '50%', 
+                        transform: 'translateY(-50%)'
+                      }}
+                    >
+                      <IconX size={12} />
+                    </ActionIcon>
+                  )}
+                </Group>
+              ))}
+            </Stack>
           </Stack>
 
-          <Stack gap="xs" p="sm">
-            <Tooltip label="Settings" position="right">
-              <ActionIcon size="xl" variant="subtle" onClick={() => setSettingsOpened(true)}>
-                <IconSettings size={20} />
-              </ActionIcon>
-            </Tooltip>
-
-            <Tooltip label={`Switch to ${isDark ? 'light' : 'dark'} mode`} position="right">
-              <ActionIcon 
-                size="xl" 
-                variant="subtle"
-                onClick={() => setColorScheme(isDark ? 'light' : 'dark')}
-              >
-                {isDark ? <IconSun size={20} /> : <IconMoon size={20} />}
-              </ActionIcon>
-            </Tooltip>
+          <Stack gap="xs" p="lg">
+            <Button 
+              variant="subtle" 
+              fullWidth 
+              leftSection={<IconSettings size={16} />} 
+              justify="flex-start"
+              onClick={() => setSettingsOpened(true)}
+            >
+              Settings
+            </Button>
+            <Button 
+              variant="subtle" 
+              fullWidth 
+              leftSection={isDark ? <IconSun size={16} /> : <IconMoon size={16} />} 
+              justify="flex-start"
+              onClick={() => setColorScheme(isDark ? 'light' : 'dark')}
+            >
+              {isDark ? 'Light' : 'Dark'} Mode
+            </Button>
           </Stack>
         </Box>
 
-        {/* Main Content */}
         <Box style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          {/* Header */}
           <Box 
             px="lg" 
             py="md"
@@ -273,20 +476,82 @@ function App() {
               backgroundColor: isDark ? '#212121' : '#ffffff',
             }}
           >
-            <Group justify="space-between" align="center">
-              <Box />
-              <Text size="lg" fw={700} c={isDark ? '#ffffff' : '#000000'}>
-                Matou
-              </Text>
-              <Text size="sm" c={isDark ? '#a0a0a0' : '#666666'} fw={500}>
-                {settings?.model?.split(':')[0]?.split('/').pop()?.replace(/[^a-zA-Z0-9]/g, ' ') || 'Loading...'}
-              </Text>
+            <Group align="center">
+              <ActionIcon 
+                variant="subtle" 
+                size="lg"
+                onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              >
+                ☰
+              </ActionIcon>
+              
+              <ActionIcon 
+                variant="subtle" 
+                size="lg"
+                onClick={() => setHelpOpened(true)}
+              >
+                <IconKeyboard size={18} />
+              </ActionIcon>
+              
+              <Menu shadow="md" width={280}>
+                <Menu.Target>
+                  <Button variant="subtle" rightSection={<IconChevronDown size={14} />}>
+                    <Group gap="xs">
+                      <Text size="sm" fw={500}>
+                        {settings?.model?.split(':')[0]?.split('/').pop()?.replace(/[^a-zA-Z0-9]/g, ' ') || 'Select Model'}
+                      </Text>
+                      <Text size="sm">{getModelSpeed(settings?.model || '')}</Text>
+                    </Group>
+                  </Button>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  {[
+                    { name: 'gemma3:270m', speed: '⚡ Fastest' },
+                    { name: 'gemma3:1b', speed: '🚀 Fast' },
+                    { name: 'deepseek-r1:1.5b', speed: '⏱️ Medium' },
+                    { name: 'gemma:2b', speed: '🐌 Slow' },
+                  ].map((model) => (
+                    <Menu.Item 
+                      key={model.name} 
+                      onClick={() => updateSettings({ model: model.name })}
+                    >
+                      <Group justify="space-between">
+                        <Text size="sm">
+                          {model.name.split(':')[0].split('/').pop()?.replace(/[^a-zA-Z0-9]/g, ' ')}
+                        </Text>
+                        <Text size="xs" c="dimmed">{model.speed}</Text>
+                      </Group>
+                    </Menu.Item>
+                  ))}
+                </Menu.Dropdown>
+              </Menu>
             </Group>
           </Box>
 
-          {/* Chat Area */}
-          <Box style={{ flex: 1, overflow: 'hidden', backgroundColor: isDark ? '#212121' : '#ffffff' }}>
-            <ScrollArea h="100%">
+          <Box 
+            style={{ 
+              flex: 1, 
+              overflow: 'hidden', 
+              background: isDark 
+                ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #16213e 75%, #1a1a2e 100%)'
+                : 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)',
+              position: 'relative'
+            }}
+          >
+            <Box 
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: isDark 
+                  ? 'rgba(33, 33, 33, 0.85)'
+                  : 'rgba(255, 255, 255, 0.85)',
+                backdropFilter: 'blur(10px)'
+              }}
+            />
+            <ScrollArea h="100%" style={{ position: 'relative', zIndex: 1 }}>
               <Container size="md" py="xl">
                 <Stack gap="xl">
                   {messages.map((message) => (
@@ -311,6 +576,24 @@ function App() {
                             {message.role === 'assistant' ? 'Matou' : 'You'}
                           </Text>
                           <Group gap="xs">
+                            {showTimestamps && (
+                              <Text size="xs" c="dimmed">
+                                {new Date(message.timestamp).toLocaleTimeString()}
+                              </Text>
+                            )}
+                            <Tooltip label={copiedMessageId === message.id ? "Copied!" : "Copy message"}>
+                              <ActionIcon 
+                                variant="subtle" 
+                                size="sm"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(message.content);
+                                  setCopiedMessageId(message.id);
+                                  setTimeout(() => setCopiedMessageId(null), 2000);
+                                }}
+                              >
+                                {copiedMessageId === message.id ? <IconCheck size={16} /> : <IconCopy size={16} />}
+                              </ActionIcon>
+                            </Tooltip>
                             {message.role === 'assistant' && (
                               <>
                                 <Tooltip label="Read aloud">
@@ -323,26 +606,36 @@ function App() {
                                     <IconVolume size={16} />
                                   </ActionIcon>
                                 </Tooltip>
-                                <Menu shadow="md" width={200}>
-                                  <Menu.Target>
-                                    <ActionIcon variant="subtle" size="sm">
-                                      <IconDots size={16} />
-                                    </ActionIcon>
-                                  </Menu.Target>
-                                  <Menu.Dropdown>
-                                    <Menu.Item onClick={() => navigator.clipboard.writeText(message.content)}>
-                                      Copy message
-                                    </Menu.Item>
-                                    <Menu.Item onClick={() => speak(message.content)} disabled={isSpeaking}>
-                                      Read aloud
-                                    </Menu.Item>
-                                    <Menu.Item color="red">
-                                      Report issue
-                                    </Menu.Item>
-                                  </Menu.Dropdown>
-                                </Menu>
+                                <Tooltip label="Regenerate">
+                                  <ActionIcon 
+                                    variant="subtle" 
+                                    size="sm"
+                                    onClick={() => regenerateMessage(messages.indexOf(message))}
+                                    disabled={isLoading}
+                                  >
+                                    <IconRefresh size={16} />
+                                  </ActionIcon>
+                                </Tooltip>
                               </>
                             )}
+                            <Menu>
+                              <Menu.Target>
+                                <ActionIcon variant="subtle" size="sm">
+                                  <IconDots size={16} />
+                                </ActionIcon>
+                              </Menu.Target>
+                              <Menu.Dropdown>
+                                <Menu.Item leftSection={<IconThumbUp size={14} />}>
+                                  Good response
+                                </Menu.Item>
+                                <Menu.Item leftSection={<IconThumbDown size={14} />}>
+                                  Poor response
+                                </Menu.Item>
+                                <Menu.Item leftSection={<IconDownload size={14} />} onClick={exportChat}>
+                                  Export chat
+                                </Menu.Item>
+                              </Menu.Dropdown>
+                            </Menu>
                           </Group>
                         </Group>
                         <Text 
@@ -363,7 +656,7 @@ function App() {
                       <Avatar size={32} radius="sm" color="blue">M</Avatar>
                       <Box>
                         <Text size="sm" fw={600} c={isDark ? '#e5e5e5' : '#374151'} mb="xs">
-                          Matou
+                          Matou is typing...
                         </Text>
                         <Box 
                           style={{
@@ -395,7 +688,6 @@ function App() {
             </ScrollArea>
           </Box>
 
-          {/* Input Area */}
           <Box 
             p="lg"
             style={{ 
@@ -414,21 +706,31 @@ function App() {
               >
                 <form onSubmit={handleSubmit}>
                   <Group gap="md" wrap="nowrap">
-                    <TextInput
+                    <Textarea
                       ref={inputRef}
-                      placeholder={isListening ? "Listening..." : "Message Matou..."}
+                      placeholder={isListening ? "🎤 Listening... Speak now" : "Message Matou... (Shift+Enter for new line)"}
                       value={inputValue}
                       onChange={(e) => setInputValue(e.currentTarget.value)}
                       disabled={isLoading || isListening}
                       style={{ flex: 1 }}
                       variant="unstyled"
                       size="md"
+                      minRows={1}
+                      maxRows={4}
+                      autosize
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSendMessage(inputValue);
+                        }
+                      }}
                       styles={{
                         input: {
                           border: 'none',
                           background: 'transparent',
                           fontSize: '16px',
                           color: isDark ? '#e5e5e5' : '#374151',
+                          resize: 'none',
                         }
                       }}
                     />
@@ -440,7 +742,13 @@ function App() {
                           radius="md"
                           variant={isListening ? "filled" : "subtle"}
                           color={isListening ? "red" : "gray"}
-                          onClick={() => isListening ? stopListening() : startListening()}
+                          onClick={() => {
+                            if (isListening) {
+                              stopListening();
+                            } else {
+                              startListening();
+                            }
+                          }}
                         >
                           {isListening ? <IconMicrophoneOff size={18} /> : <IconMicrophone size={18} />}
                         </ActionIcon>
@@ -528,7 +836,94 @@ function App() {
             </Group>
           </Box>
           
+          <Box>
+            <Text size="sm" fw={500} mb="xs">System Prompt</Text>
+            <Select
+              placeholder="Choose a preset or custom"
+              value={Object.keys(systemPrompts).find(key => systemPrompts[key as keyof typeof systemPrompts] === settings?.systemPrompt) || 'custom'}
+              onChange={(value) => {
+                if (value && value !== 'custom') {
+                  updateSettings({ systemPrompt: systemPrompts[value as keyof typeof systemPrompts] });
+                }
+              }}
+              data={[
+                { value: 'default', label: '🤖 Default Assistant' },
+                { value: 'junior_dev', label: '👨‍💻 Junior Developer Mentor' },
+                { value: 'learner', label: '📚 Learning Tutor' },
+                { value: 'musician', label: '🎵 Music Producer' },
+                { value: 'artist_3d', label: '🎨 3D Artist' },
+                { value: 'filmmaker', label: '🎬 Filmmaker' },
+                { value: 'custom', label: '✏️ Custom' },
+              ]}
+              mb="xs"
+            />
+            <Textarea
+              placeholder="Enter custom system instructions..."
+              value={settings?.systemPrompt || ''}
+              onChange={(event) => updateSettings({ systemPrompt: event.currentTarget.value })}
+              minRows={3}
+              maxRows={6}
+              autosize
+            />
+          </Box>
+          
+          <Button 
+            color="red" 
+            variant="light"
+            fullWidth
+            onClick={() => {
+              const newChatId = 'chat-1';
+              const newChat = {
+                id: newChatId,
+                title: 'New Chat',
+                messages: [{
+                  id: '1',
+                  role: 'assistant',
+                  content: 'Hello! I\'m Matou, your AI assistant. How can I help you today?',
+                  timestamp: new Date().toISOString()
+                }],
+                timestamp: new Date().toISOString()
+              };
+              setChatHistory({ [newChatId]: newChat });
+              setCurrentChatId(newChatId);
+            }}
+          >
+            🗑️ Clear All Chats
+          </Button>
+          
           <Button onClick={() => setSettingsOpened(false)} fullWidth>
+            Close
+          </Button>
+        </Stack>
+      </Modal>
+      
+      <Modal opened={helpOpened} onClose={() => setHelpOpened(false)} title="Keyboard Shortcuts" size="md">
+        <Stack gap="md">
+          <Group justify="space-between">
+            <Text size="sm">New Chat</Text>
+            <Text size="sm" c="dimmed">Ctrl + N</Text>
+          </Group>
+          <Group justify="space-between">
+            <Text size="sm">Settings</Text>
+            <Text size="sm" c="dimmed">Ctrl + ,</Text>
+          </Group>
+          <Group justify="space-between">
+            <Text size="sm">Search Chats</Text>
+            <Text size="sm" c="dimmed">Ctrl + K</Text>
+          </Group>
+          <Group justify="space-between">
+            <Text size="sm">Send Message</Text>
+            <Text size="sm" c="dimmed">Enter</Text>
+          </Group>
+          <Group justify="space-between">
+            <Text size="sm">New Line</Text>
+            <Text size="sm" c="dimmed">Shift + Enter</Text>
+          </Group>
+          <Group justify="space-between">
+            <Text size="sm">Show Help</Text>
+            <Text size="sm" c="dimmed">?</Text>
+          </Group>
+          <Button onClick={() => setHelpOpened(false)} fullWidth>
             Close
           </Button>
         </Stack>
